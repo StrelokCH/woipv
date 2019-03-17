@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{ee896a83-3996-4e16-96b4-5d8cfec7c794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Types">
+      <UniqueIdentifier>{314e6976-6c09-4598-8b5a-55059f1cdaca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Types\Problem.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Interfaces\SATSolver.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Literal.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Assignment.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\SolvingResult.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Problem.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Clause.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\SATPartitioner.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
