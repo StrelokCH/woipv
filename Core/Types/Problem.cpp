@@ -5,31 +5,31 @@
 #include <cctype>
 #include <iostream>
 
-Problem::Problem(Variable numberOfVariables, const std::vector<Clause>& clauses) :
+CORE_API Problem::Problem(Variable numberOfVariables, const std::vector<Clause>& clauses) :
     numberOfVariables(numberOfVariables),
     clauses(clauses)
 {
 }
 
-Problem::Problem(Variable numberOfVariables, std::vector<Clause>&& clauses) :
+CORE_API Problem::Problem(Variable numberOfVariables, std::vector<Clause>&& clauses) :
     numberOfVariables(numberOfVariables),
     clauses(std::move(clauses))
 {
 }
 
-Problem::Problem(const Problem& other) :
+CORE_API Problem::Problem(const Problem& other) :
     numberOfVariables(other.numberOfVariables),
     clauses(other.clauses)
 {
 }
 
-Problem::Problem(Problem&& other) :
+CORE_API Problem::Problem(Problem&& other) :
     numberOfVariables(other.numberOfVariables),
     clauses(std::move(other.clauses))
 {
 }
 
-Problem& Problem::operator=(const Problem& other)
+CORE_API Problem& Problem::operator=(const Problem& other)
 {
     if (&other != this) {
         numberOfVariables = other.numberOfVariables;
@@ -38,7 +38,7 @@ Problem& Problem::operator=(const Problem& other)
     return *this;
 }
 
-Problem& Problem::operator=(Problem&& other)
+CORE_API Problem& Problem::operator=(Problem&& other)
 {
     if (&other != this) {
         numberOfVariables = other.numberOfVariables;
@@ -47,11 +47,11 @@ Problem& Problem::operator=(Problem&& other)
     return *this;
 }
 
-Problem::~Problem()
+CORE_API Problem::~Problem()
 {
 }
 
-SolvingResult Problem::Apply(const Assignment& assignment) const
+CORE_API SolvingResult Problem::Apply(const Assignment& assignment) const
 {
     if (numberOfVariables > (signed)assignment.size()) {
         return SolvingResult::Undefined;
@@ -85,7 +85,7 @@ T ParseNumber(const std::string& input, size_t& pos)
     SkipSpace(input, pos);
 
     std::string substr = input.substr(pos);
-    if (!substr.empty()) {
+    if (substr.empty()) {
         throw std::invalid_argument("Convert error: cannot convert empty string to number");
     }
 
@@ -114,7 +114,7 @@ Clause ParseClause(const std::string& input, size_t& pos)
     return c;
 }
 
-Problem Problem::FromCNF(std::istream& input)
+CORE_API Problem Problem::FromCNF(std::istream& input)
 {
     if (!input) {
         return Problem();
@@ -129,12 +129,12 @@ Problem Problem::FromCNF(std::istream& input)
     while (std::getline(input, line)) {
         size_t pos = 0;
         SkipSpace(line, pos);
-        if (!foundHeader && line.rfind(header, 0)) {
+        if (!foundHeader && line.rfind(header, 0) == 0) {
             // header
             pos += header.size();
             p.numberOfVariables = ParseNumber<Variable>(line, pos);
             clauses = ParseNumber<Variable>(line, pos);
-        } else if (line.rfind("c", 0)) {
+        } else if (line.rfind("c", 0) == 0) {
             // comment
         } else {
             // clause

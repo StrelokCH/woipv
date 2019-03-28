@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "DLLMakro.h"
 
 /// <summary>
 /// Shall be unsigned.
@@ -12,7 +13,4 @@ using Variable = int32_t;
 /// </summary>
 using Literal = Variable;
 
-Variable toVariable(Literal literal)
-{
-    return abs(literal);
-}
+CORE_API Variable ToVariable(Literal literal);

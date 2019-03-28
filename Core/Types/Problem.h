@@ -1,12 +1,18 @@
 #pragma once
 
+#include "DLLMakro.h"
 #include "vector"
 #include "Clause.h"
 #include "Literal.h"
 #include "Assignment.h"
 #include "SolvingResult.h"
 
-class Problem {
+CORE_API std::string;
+
+template class CORE_API std::allocator<Clause>;
+template class CORE_API std::vector<Clause>;
+
+class CORE_API Problem {
 private:
     Variable numberOfVariables = 0;
     std::vector<Clause> clauses;

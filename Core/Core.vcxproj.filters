@@ -15,6 +15,9 @@
     <ClCompile Include="Types\Problem.cpp">
       <Filter>Types</Filter>
     </ClCompile>
+    <ClCompile Include="Types\Literal.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -40,5 +43,9 @@
     <ClInclude Include="Interfaces\SATPartitioner.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="DLLMakro.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
