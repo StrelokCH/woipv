@@ -8,8 +8,11 @@
 
 class Problem {
 private:
-    Variable numberOfVariables;
+    Variable numberOfVariables = 0;
     std::vector<Clause> clauses;
+
+private:
+    Problem() = default;
 
 public:
     Problem(Variable numberOfVariables, const std::vector<Clause>& clauses);
@@ -29,5 +32,12 @@ public:
     /// <param name="assignment"></param>
     /// <returns></returns>
     SolvingResult Apply(const Assignment& assignment) const;
+
+    /// <summary>
+    /// Creates an Instance of Problem from the given cnf.
+    /// </summary>
+    /// <param name="input">in dimacs/cnf</param>
+    /// <returns></returns>
+    static Problem FromCNF(std::istream& input);
 };
 
