@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include "DLLMakro.h"
+#include "Core/DLLMakro.h"
 
 /// <summary>
 /// Shall be unsigned.

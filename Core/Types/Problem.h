@@ -1,7 +1,9 @@
 #pragma once
 
-#include "DLLMakro.h"
-#include "vector"
+#include "Core/DLLMakro.h"
+
+#include <vector>
+
 #include "Clause.h"
 #include "Literal.h"
 #include "Assignment.h"

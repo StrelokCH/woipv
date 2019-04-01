@@ -2,10 +2,11 @@
 //
 
 #include "pch.h"
+
 #include <iostream>
 #include <fstream>
 
-#include "Types\Problem.h"
+#include "Core/Types/Problem.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,4 +22,5 @@ int main(int argc, char *argv[])
     }
 
     auto p = Problem::FromCNF(infile);
+    auto a = Assignment(5);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DLLMakro.h"
+#include "Core/DLLMakro.h"
 
 enum class SolvingResult : char {
     Undefined,

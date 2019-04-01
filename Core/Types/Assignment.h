@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "DLLMakro.h"
-#include "Types/Literal.h"
+#include "Core/DLLMakro.h"
+#include "Core/Types/Literal.h"
 
 enum class VariableState : char {
     Undefined = -1,
