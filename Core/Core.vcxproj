@@ -27,6 +27,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Types\Assignment.cpp" />
     <ClCompile Include="Types\Literal.cpp" />
     <ClCompile Include="Types\Problem.cpp" />
   </ItemGroup>

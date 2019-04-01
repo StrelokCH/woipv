@@ -18,6 +18,9 @@
     <ClCompile Include="Types\Literal.cpp">
       <Filter>Types</Filter>
     </ClCompile>
+    <ClCompile Include="Types\Assignment.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
