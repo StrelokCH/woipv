@@ -53,14 +53,14 @@ Problem::~Problem()
 
 SolvingResult Problem::Apply(const Assignment& assignment) const
 {
-    if (numberOfVariables > (signed)assignment.size()) {
+    if (numberOfVariables > (signed)assignment.Size()) {
         return SolvingResult::Undefined;
     }
 
     for (auto& clause : clauses) {
         bool sat = false;
         for (auto& literal : clause) {
-            if (assignment.IsTrue(literal)) {
+            if (assignment.IsSAT(literal)) {
                 sat = true;
                 break;
             }
@@ -151,4 +151,9 @@ Problem Problem::FromCNF(std::istream& input)
     }
 
     return p;
+}
+
+const std::vector<Clause>& Problem::GetClauses() const
+{
+    return clauses;
 }

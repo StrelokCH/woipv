@@ -43,5 +43,7 @@ public:
     /// <param name="input">in dimacs/cnf</param>
     /// <returns></returns>
     static Problem FromCNF(std::istream& input);
+
+    const std::vector<Clause>& GetClauses() const;
 };
 
