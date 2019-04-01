@@ -7,8 +7,6 @@
 #include "Assignment.h"
 #include "SolvingResult.h"
 
-CORE_API std::string;
-
 template class CORE_API std::allocator<Clause>;
 template class CORE_API std::vector<Clause>;
 
