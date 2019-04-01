@@ -7,3 +7,6 @@
 /*Enabled as "import" in the Client side for using already created dll file*/
 #define CORE_API __declspec(dllimport)
 #endif
+
+// needs to have dll-interface to be used by clients of class
+#pragma warning(disable: 4251)
