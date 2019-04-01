@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-CORE_API Variable ToVariable(Literal literal)
+Variable ToVariable(Literal literal)
 {
     return abs(literal);
 }

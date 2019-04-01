@@ -5,31 +5,31 @@
 #include <cctype>
 #include <iostream>
 
-CORE_API Problem::Problem(Variable numberOfVariables, const std::vector<Clause>& clauses) :
+Problem::Problem(Variable numberOfVariables, const std::vector<Clause>& clauses) :
     numberOfVariables(numberOfVariables),
     clauses(clauses)
 {
 }
 
-CORE_API Problem::Problem(Variable numberOfVariables, std::vector<Clause>&& clauses) :
+Problem::Problem(Variable numberOfVariables, std::vector<Clause>&& clauses) :
     numberOfVariables(numberOfVariables),
     clauses(std::move(clauses))
 {
 }
 
-CORE_API Problem::Problem(const Problem& other) :
+Problem::Problem(const Problem& other) :
     numberOfVariables(other.numberOfVariables),
     clauses(other.clauses)
 {
 }
 
-CORE_API Problem::Problem(Problem&& other) :
+Problem::Problem(Problem&& other) :
     numberOfVariables(other.numberOfVariables),
     clauses(std::move(other.clauses))
 {
 }
 
-CORE_API Problem& Problem::operator=(const Problem& other)
+Problem& Problem::operator=(const Problem& other)
 {
     if (&other != this) {
         numberOfVariables = other.numberOfVariables;
@@ -38,7 +38,7 @@ CORE_API Problem& Problem::operator=(const Problem& other)
     return *this;
 }
 
-CORE_API Problem& Problem::operator=(Problem&& other)
+Problem& Problem::operator=(Problem&& other)
 {
     if (&other != this) {
         numberOfVariables = other.numberOfVariables;
@@ -47,11 +47,11 @@ CORE_API Problem& Problem::operator=(Problem&& other)
     return *this;
 }
 
-CORE_API Problem::~Problem()
+Problem::~Problem()
 {
 }
 
-CORE_API SolvingResult Problem::Apply(const Assignment& assignment) const
+SolvingResult Problem::Apply(const Assignment& assignment) const
 {
     if (numberOfVariables > (signed)assignment.size()) {
         return SolvingResult::Undefined;
@@ -114,7 +114,7 @@ Clause ParseClause(const std::string& input, size_t& pos)
     return c;
 }
 
-CORE_API Problem Problem::FromCNF(std::istream& input)
+Problem Problem::FromCNF(std::istream& input)
 {
     if (!input) {
         return Problem();
