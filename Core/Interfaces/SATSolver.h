@@ -8,7 +8,7 @@
 #include "Core/Types/Assignment.h"
 #include "Core/Types/Problem.h"
 
-CORE_API class SATSolver {
+class SATSolver {
 public:
-    CORE_API virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(Problem p) abstract;
+    virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(Problem p) abstract;
 };

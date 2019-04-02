@@ -8,8 +8,8 @@
 #include "Core/Types/Assignment.h"
 #include "Core/Types/Problem.h"
 
-CORE_API class SATPartitioner {
+class SATPartitioner {
 public:
-    CORE_API virtual std::vector<Problem> Split(Problem p) abstract;
-    CORE_API virtual std::pair<SolvingResult, std::optional<Assignment>> Merge(Problem p) abstract;
+    virtual std::vector<Problem> Split(Problem p) abstract;
+    virtual std::pair<SolvingResult, std::optional<Assignment>> Merge(Problem p) abstract;
 };
