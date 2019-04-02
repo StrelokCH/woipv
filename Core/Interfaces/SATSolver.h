@@ -8,7 +8,10 @@
 #include "Core/Types/Assignment.h"
 #include "Core/Types/Problem.h"
 
-class SATSolver {
+/// <summary>
+/// This class should be overwritten by concrete implementations.
+/// </summary>
+class CORE_API SATSolver {
 public:
-    virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(Problem p) abstract;
+    virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(Problem p);
 };

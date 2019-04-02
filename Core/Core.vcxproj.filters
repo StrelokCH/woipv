@@ -27,6 +27,9 @@
     <ClCompile Include="Utility\CNFParser.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Interfaces\SATSolver.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
