@@ -5,10 +5,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include "Core/Types/Assignment.h"
 #include "Core/Utility/CNFParser.h"
 #include "Core/Interfaces/SATSolver.h"
+
+#include "SifferDP/SifferDPSolver.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,35 +30,40 @@ int main(int argc, char *argv[])
     auto p = ParseCNF(infile);
     auto a = Assignment(5);
 
-    auto assignment = std::optional<Assignment>();
-    auto solvingResult = SolvingResult::Undefined;
+    auto s = SifferDPSolver();
 
+    auto[solvingResult, assignment] = SifferDPSolver().Solve(p);
+
+    // output result
+    std::stringstream output;
+    switch (solvingResult) {
+        case SolvingResult::Satisfiable:
+            output << "sat";
+            break;
+        case SolvingResult::Unsatisfiable:
+            output << "unsat";
+            break;
+        case SolvingResult::Undefined:
+            output << "undef";
+            break;
+        default:
+            throw std::runtime_error("invalid SolvingResult");
+    }
+    output << std::endl;
+    if (assignment) {
+        output << assignment.value();
+    } else {
+        output << "no assignment";
+    }
+    std::cout << output.str();
+
+    // write result to file
     std::ofstream outfile(argv[2]);
     if (!outfile) {
         std::cout << "Could not open output file (" << argv[2] << ").";
         return EXIT_FAILURE;
     }
-
-    // output result
-    switch (solvingResult) {
-        case SolvingResult::Satisfiable:
-            outfile << "sat";
-            break;
-        case SolvingResult::Unsatisfiable:
-            outfile << "unsat";
-            break;
-        case SolvingResult::Undefined:
-            outfile << "undef";
-            break;
-        default:
-            throw std::runtime_error("invalid SolvingResult");
-    }
-    outfile << std::endl;
-    if (assignment) {
-        outfile << assignment.value();
-    } else {
-        outfile << "not assignment";
-    }
+    outfile << output.str();
 
     return EXIT_SUCCESS;
 }
