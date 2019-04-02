@@ -3,10 +3,10 @@
 #include <utility>
 #include <optional>
 
-#include "DLLMakro.h"
-#include "Types\SolvingResult.h"
-#include "Types\Assignment.h"
-#include "Types\Problem.h"
+#include "Core/DLLMakro.h"
+#include "Core/Types/SolvingResult.h"
+#include "Core/Types/Assignment.h"
+#include "Core/Types/Problem.h"
 
 CORE_API class SATSolver {
 public:
