@@ -72,3 +72,8 @@ const std::vector<Clause>& Problem::GetClauses() const
 {
     return clauses;
 }
+
+const Variable& Problem::GetNumberOfVariables() const
+{
+    return numberOfVariables;
+}

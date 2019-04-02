@@ -38,5 +38,6 @@ public:
     SolvingResult Apply(const Assignment& assignment) const;
 
     const std::vector<Clause>& GetClauses() const;
+    const Variable& GetNumberOfVariables() const;
 };
 
