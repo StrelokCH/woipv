@@ -23,7 +23,18 @@ public:
         auto p = ParseCNF(ss);
 
         Assert::AreEqual<size_t>(3, p.GetClauses().size());
+        Assert::AreEqual({{1, -3}, {2, 3, -1}, {5, -6}}, p.GetClauses());
         Assert::AreEqual(6, p.GetNumberOfVariables());
+    }
+
+    TEST_METHOD(TestParseCNF_Empty)
+    {
+        std::stringstream ss("");
+
+        auto p = ParseCNF(ss);
+
+        Assert::AreEqual<size_t>(0, p.GetClauses().size());
+        Assert::AreEqual(0, p.GetNumberOfVariables());
     }
 
 };

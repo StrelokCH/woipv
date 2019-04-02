@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ToString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
