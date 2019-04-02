@@ -6,7 +6,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "Core/Types/Problem.h"
+#include "Core/Types/Assignment.h"
+#include "Core/Utility/CNFParser.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,6 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    auto p = Problem::FromCNF(infile);
+    auto p = ParseCNF(infile);
     auto a = Assignment(5);
 }

@@ -7,6 +7,9 @@
     <Filter Include="Types">
       <UniqueIdentifier>{314e6976-6c09-4598-8b5a-55059f1cdaca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{883f4d43-da7a-4669-ac62-1e6b58aa1c2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
@@ -20,6 +23,9 @@
     </ClCompile>
     <ClCompile Include="Types\Assignment.cpp">
       <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\CNFParser.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +53,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="DLLMakro.h" />
+    <ClInclude Include="Utility\CNFParser.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

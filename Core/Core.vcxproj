@@ -30,6 +30,7 @@
     <ClCompile Include="Types\Assignment.cpp" />
     <ClCompile Include="Types\Literal.cpp" />
     <ClCompile Include="Types\Problem.cpp" />
+    <ClCompile Include="Utility\CNFParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DLLMakro.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="Types\Literal.h" />
     <ClInclude Include="Types\Problem.h" />
     <ClInclude Include="Types\SolvingResult.h" />
+    <ClInclude Include="Utility\CNFParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

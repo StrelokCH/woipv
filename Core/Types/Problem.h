@@ -17,10 +17,8 @@ private:
     Variable numberOfVariables = 0;
     std::vector<Clause> clauses;
 
-private:
-    Problem() = default;
-
 public:
+    Problem() = default;
     Problem(Variable numberOfVariables, const std::vector<Clause>& clauses);
     Problem(Variable numberOfVariables, std::vector<Clause>&& clauses);
     Problem(const Problem& other);
@@ -38,13 +36,6 @@ public:
     /// <param name="assignment"></param>
     /// <returns></returns>
     SolvingResult Apply(const Assignment& assignment) const;
-
-    /// <summary>
-    /// Creates an Instance of Problem from the given cnf.
-    /// </summary>
-    /// <param name="input">in dimacs/cnf</param>
-    /// <returns></returns>
-    static Problem FromCNF(std::istream& input);
 
     const std::vector<Clause>& GetClauses() const;
 };
