@@ -1,15 +1,12 @@
 #pragma once
 
-#include <utility>
-#include <optional>
-
 #include "Core/DLLMakro.h"
-#include "Core/Types/SolvingResult.h"
-#include "Core/Types/Assignment.h"
-#include "Core/Types/Problem.h"
+#include "SATSolver.h"
 
-class SATPartitioner {
+/// <summary>
+/// Use this class to indicate a SATSolver that relies on SATPartitioning.
+/// </summary>
+class CORE_API SATPartitioner : public SATSolver {
 public:
-    virtual std::vector<Problem> Split(Problem p) abstract;
-    virtual std::pair<SolvingResult, std::optional<Assignment>> Merge(Problem p) abstract;
+    virtual void SetPartitionSolver(SATSolver& solver) abstract;
 };

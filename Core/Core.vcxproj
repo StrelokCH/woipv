@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Interfaces\SATPartitioner.cpp" />
     <ClCompile Include="Interfaces\SATSolver.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -43,6 +44,7 @@
     <ClInclude Include="Types\Clause.h" />
     <ClInclude Include="Types\Literal.h" />
     <ClInclude Include="Types\Problem.h" />
+    <ClInclude Include="Types\Solution.h" />
     <ClInclude Include="Types\SolvingResult.h" />
     <ClInclude Include="Utility\CNFParser.h" />
   </ItemGroup>

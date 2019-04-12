@@ -30,6 +30,7 @@
     <ClCompile Include="Interfaces\SATSolver.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="Interfaces\SATPartitioner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -58,6 +59,9 @@
     <ClInclude Include="DLLMakro.h" />
     <ClInclude Include="Utility\CNFParser.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Solution.h">
+      <Filter>Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

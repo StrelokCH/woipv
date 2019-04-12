@@ -1,7 +1,13 @@
 #include "Core/stdafx.h"
 #include "SATSolver.h"
 
-std::pair<SolvingResult, std::optional<Assignment>> SATSolver::Solve(Problem p)
+#include <algorithm>
+
+std::vector<Solution> SATSolver::Solve(std::vector<Problem> problems)
 {
-    return std::make_pair(SolvingResult::Undefined, std::optional<Assignment>());
+    decltype(Solve(problems)) ret;
+    std::transform(problems.begin(), problems.end(), ret.begin(), [this](auto p) {
+        return Solve(p);
+    });
+    return ret;
 }
