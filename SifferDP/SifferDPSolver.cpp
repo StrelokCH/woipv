@@ -4,7 +4,7 @@
 #include "SifferDP/Details/dp.h"
 #include "Core/Types/Literal.h"
 
-std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(Problem problem)
+std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(Problem problem, OptionalTimeLimitMs timeLimit)
 {
     conjunc conj;
     for (auto& clause : problem.GetClauses()) {
@@ -19,10 +19,13 @@ std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(Proble
     }
 
     SolvingResult result = SolvingResult::Undefined;
-    if (DPSolve(conj)) {
-        result = SolvingResult::Satisfiable;
-    } else {
-        result = SolvingResult::Unsatisfiable;
+    auto sat = DPSolve(conj, timeLimit);
+    if (sat.has_value()) {
+        if (sat.value()) {
+            result = SolvingResult::Satisfiable;
+        } else {
+            result = SolvingResult::Unsatisfiable;
+        }
     }
 
     return std::make_pair(result, std::optional<Assignment>());

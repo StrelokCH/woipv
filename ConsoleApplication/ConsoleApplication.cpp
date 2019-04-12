@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     auto s = SifferDPSolver();
 
-    auto[solvingResult, assignment] = SifferDPSolver().Solve(p);
+    auto[solvingResult, assignment] = SifferDPSolver().Solve(p, {});
 
     // output result
     std::stringstream output;

@@ -8,6 +8,8 @@
 
 #include <algorithm>
 #include <iterator>
+#include <optional>
+#include <chrono>
 
 namespace DP_SOLVER {
 bool checkNoClause(const conjunc &problem)
@@ -109,10 +111,13 @@ int checkSolved(conjunc &problem)
 
 using namespace DP_SOLVER;
 
-static bool DPSolve(conjunc &problem)
+static std::optional<bool> DPSolve(conjunc &problem, std::optional<std::chrono::milliseconds> timeLimit)
 {
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+    auto inTime = true;
     int i = 0;
-    while (true) { // TODO this might be incorrect
+    while (inTime) { // TODO this might be incorrect
         int solved = checkSolved(problem);
         if (solved != 0) {
             return solved == 1;
@@ -143,7 +148,14 @@ static bool DPSolve(conjunc &problem)
             problem.merge(conj_of_disjs_w_to_resolve);
         }
 
-        //std::cout << "After " << ++i << " iteration(s): " << problem.disjs.size() << " clauses." << endl;
+        if (timeLimit) {
+            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+            auto ellapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+            inTime = ellapsed < timeLimit;
+        }
 
+        //std::cout << "After " << ++i << " iteration(s): " << problem.disjs.size() << " clauses." << endl;
     }
+
+    return {};
 }
