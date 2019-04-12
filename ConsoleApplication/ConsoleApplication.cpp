@@ -13,6 +13,8 @@
 
 #include "SifferDP/SifferDPSolver.h"
 
+#include "Partitioning/Algorithm/GreedyPartitioner.h"
+
 int main(int argc, char *argv[])
 {
     if (argc < 3) {
@@ -30,9 +32,12 @@ int main(int argc, char *argv[])
     auto p = ParseCNF(infile);
     auto a = Assignment(5);
 
-    auto s = SifferDPSolver();
+    auto s = std::make_shared<SifferDPSolver>();
 
-    auto[solvingResult, assignment] = SifferDPSolver().Solve(p, {});
+    auto part = GreedyPartitioner();
+    part.SetPartitionSolver(s);
+
+    auto[solvingResult, assignment] = part.Solve(p, {});
 
     // output result
     std::stringstream output;
