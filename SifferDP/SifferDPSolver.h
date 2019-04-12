@@ -6,5 +6,5 @@
 
 class SIFFERDP_API SifferDPSolver : public SATSolver {
 public:
-    virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(Problem problem, OptionalTimeLimitMs timeLimit) override;
+    virtual std::pair<SolvingResult, std::optional<Assignment>> Solve(const Problem& problem, OptionalTimeLimitMs timeLimit) override;
 };

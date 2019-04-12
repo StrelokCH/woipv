@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-std::vector<Solution> SATSolver::Solve(std::vector<std::pair<Problem, OptionalTimeLimitMs>> problems)
+std::vector<Solution> SATSolver::Solve(const std::vector<std::pair<Problem&, OptionalTimeLimitMs>>& problems)
 {
     decltype(Solve(problems)) ret;
     std::transform(problems.begin(), problems.end(), ret.begin(), [this](auto p) {

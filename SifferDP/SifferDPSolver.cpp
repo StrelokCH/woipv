@@ -4,7 +4,7 @@
 #include "SifferDP/Details/dp.h"
 #include "Core/Types/Literal.h"
 
-std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(Problem problem, OptionalTimeLimitMs timeLimit)
+std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(const Problem& problem, OptionalTimeLimitMs timeLimit)
 {
     conjunc conj;
     for (auto& clause : problem.GetClauses()) {
@@ -28,5 +28,5 @@ std::pair<SolvingResult, std::optional<Assignment>> SifferDPSolver::Solve(Proble
         }
     }
 
-    return std::make_pair(result, std::optional<Assignment>());
+    return {result, std::optional<Assignment>()};
 }

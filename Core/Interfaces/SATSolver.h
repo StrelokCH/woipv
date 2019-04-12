@@ -15,6 +15,6 @@ using OptionalTimeLimitMs = std::optional<std::chrono::milliseconds>;
 /// </summary>
 class CORE_API SATSolver {
 public:
-    virtual Solution Solve(Problem problem, OptionalTimeLimitMs timeLimit) abstract;
-    virtual std::vector<Solution> Solve(std::vector<std::pair<Problem, OptionalTimeLimitMs>> problems);
+    virtual Solution Solve(const Problem& problem, OptionalTimeLimitMs timeLimit) abstract;
+    virtual std::vector<Solution> Solve(const std::vector<std::pair<Problem&, OptionalTimeLimitMs>>& problems);
 };
