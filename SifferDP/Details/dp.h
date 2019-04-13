@@ -113,7 +113,7 @@ using namespace DP_SOLVER;
 
 static std::optional<bool> DPSolve(conjunc &problem, std::optional<std::chrono::milliseconds> timeLimit)
 {
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    auto start = std::chrono::steady_clock::now();
 
     auto inTime = true;
     int i = 0;
@@ -149,8 +149,7 @@ static std::optional<bool> DPSolve(conjunc &problem, std::optional<std::chrono::
         }
 
         if (timeLimit) {
-            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-            auto ellapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+            auto ellapsed = std::chrono::steady_clock::now() - start;
             inTime = ellapsed < timeLimit;
         }
 
