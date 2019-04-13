@@ -5,7 +5,7 @@
 
 Assignment::Assignment(Variable numberOfVariables, VariableState state)
     :
-    states(std::vector<VariableState>(numberOfVariables+1, state))
+    states(std::vector<VariableState>(numberOfVariables + 1, state))
 {
 
 }
@@ -38,7 +38,7 @@ size_t Assignment::Size() const
 
 std::ostream& operator<<(std::ostream& out, const Assignment& a)
 {
-    for (decltype(a.Size()) i = 0; i < a.Size(); i++) {
+    for (decltype(a.Size()) i = 1; i < a.Size(); i++) {
         switch (a.GetState(i)) {
             case VariableState::Undefined:
                 out << '?' << i;
@@ -52,6 +52,7 @@ std::ostream& operator<<(std::ostream& out, const Assignment& a)
             default:
                 throw std::runtime_error("illegal state of variable");
         }
+        out << " ";
     }
     return out;
 }
