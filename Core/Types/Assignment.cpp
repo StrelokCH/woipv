@@ -5,7 +5,7 @@
 
 Assignment::Assignment(Variable numberOfVariables, VariableState state)
     :
-    states(std::vector<VariableState>(numberOfVariables, state))
+    states(std::vector<VariableState>(numberOfVariables+1, state))
 {
 
 }
