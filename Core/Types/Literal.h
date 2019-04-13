@@ -15,3 +15,4 @@ using Literal = Variable;
 
 CORE_API Variable ToVariable(Literal literal);
 CORE_API Literal Negate(Literal literal);
+CORE_API bool IsPositive(Literal literal);

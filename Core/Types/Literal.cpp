@@ -12,3 +12,8 @@ Literal Negate(Literal literal)
 {
     return -literal;
 }
+
+bool IsPositive(Literal literal)
+{
+    return literal > 0;
+}

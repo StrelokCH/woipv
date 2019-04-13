@@ -13,7 +13,7 @@ Assignment::Assignment(Variable numberOfVariables, VariableState state)
 bool Assignment::IsSAT(Literal literal) const
 {
     Variable var = ToVariable(literal);
-    bool positive = literal == var;
+    bool positive = IsPositive(literal);
     if (positive) {
         return states[var] == VariableState::True;
     } else {
