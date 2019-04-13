@@ -13,6 +13,8 @@ using Variable = int32_t;
 /// </summary>
 using Literal = Variable;
 
+constexpr Variable FirstVariable = 1;
+
 CORE_API Variable ToVariable(Literal literal);
 CORE_API Literal Negate(Literal literal);
 CORE_API bool IsPositive(Literal literal);
