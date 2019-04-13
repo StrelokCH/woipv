@@ -7,3 +7,8 @@ Variable ToVariable(Literal literal)
 {
     return abs(literal);
 }
+
+Literal Negate(Literal literal)
+{
+    return -literal;
+}
