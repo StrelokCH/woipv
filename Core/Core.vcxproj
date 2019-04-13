@@ -33,6 +33,7 @@
     <ClCompile Include="Types\Literal.cpp" />
     <ClCompile Include="Types\Problem.cpp" />
     <ClCompile Include="Utility\CNFParser.cpp" />
+    <ClCompile Include="Utility\TimeLimit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DLLMakro.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Types\Solution.h" />
     <ClInclude Include="Types\SolvingResult.h" />
     <ClInclude Include="Utility\CNFParser.h" />
+    <ClInclude Include="Utility\TimeLimit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

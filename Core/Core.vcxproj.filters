@@ -31,6 +31,9 @@
       <Filter>Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Interfaces\SATPartitioner.cpp" />
+    <ClCompile Include="Utility\TimeLimit.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="Types\Solution.h">
       <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TimeLimit.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

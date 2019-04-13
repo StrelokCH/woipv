@@ -2,12 +2,15 @@
 #include "SATSolver.h"
 
 #include <algorithm>
+#include <functional>
 
-std::vector<Solution> SATSolver::Solve(const std::vector<std::pair<Problem&, OptionalTimeLimitMs>>& problems)
+std::vector<Solution> SATSolver::Solve(const std::vector<Problem>& problems, OptionalTimeLimitMs timeLimit)
 {
-    decltype(Solve(problems)) ret;
-    std::transform(problems.begin(), problems.end(), ret.begin(), [this](auto p) {
-        return Solve(p.first, p.second);
+    auto start = std::chrono::steady_clock::now();
+
+    decltype(Solve(problems, timeLimit)) ret;
+    std::transform(problems.begin(), problems.end(), ret.begin(), [this, &start, &timeLimit](auto p) {
+        return Solve(p, GetRemaining(timeLimit, start));
     });
     return ret;
 }
