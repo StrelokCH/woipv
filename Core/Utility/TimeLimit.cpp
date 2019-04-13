@@ -12,7 +12,7 @@ OptionalTimeLimitMs GetRemaining(OptionalTimeLimitMs timeLimit, std::chrono::tim
 
 }
 
-bool HasRemaining(OptionalTimeLimitMs timeLimit, std::chrono::time_point<std::chrono::steady_clock> start)
+bool HasRemaining(OptionalTimeLimitMs timeLimit, std::chrono::steady_clock::time_point start)
 {
     if (!timeLimit) {
         return true;
