@@ -149,8 +149,8 @@ static std::optional<bool> DPSolve(conjunc &problem, std::optional<std::chrono::
         }
 
         if (timeLimit) {
-            auto ellapsed = std::chrono::steady_clock::now() - start;
-            inTime = ellapsed < timeLimit;
+            auto elapsed = std::chrono::steady_clock::now() - start;
+            inTime = elapsed < timeLimit;
         }
 
         //std::cout << "After " << ++i << " iteration(s): " << problem.disjs.size() << " clauses." << endl;
