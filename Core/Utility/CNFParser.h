@@ -2,7 +2,7 @@
 
 #include "Core/DLLMakro.h"
 
-#include <iostream>
+#include <istream>
 
 #include "Core/Types/Problem.h"
 
