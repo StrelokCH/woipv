@@ -76,7 +76,7 @@ Problem ParseCNF(std::istream& input)
             foundHeader = true;
         } else if (line.rfind("c", 0) == 0) {
             // comment
-        } else {
+        } else if (!line.empty()) {
             // clause
             auto c = ParseClause(line, pos);
             if (!c.empty()) {
