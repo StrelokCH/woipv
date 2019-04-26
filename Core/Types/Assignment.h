@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <ostream>
 
 #include "Core/DLLMakro.h"
 #include "Core/Types/Literal.h"
