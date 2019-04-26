@@ -7,4 +7,5 @@ std::ostream& operator<<(std::ostream& out, const Clause& clause)
         out << literal << " ";
     }
     out << 0;
+    return out;
 }
