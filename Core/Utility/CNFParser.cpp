@@ -3,13 +3,10 @@
 
 #include <sstream>
 #include <cctype>
+#include <iostream>
 
+#include "CNFConstants.h"
 #include "Core/Types/Problem.h"
-
-/// <summary>
-/// Start of the header row.
-/// </summary>
-const std::string header = "p cnf";
 
 static void SkipSpace(const std::string& input, size_t &pos)
 {
@@ -68,9 +65,9 @@ Problem ParseCNF(std::istream& input)
     while (std::getline(input, line)) {
         size_t pos = 0;
         SkipSpace(line, pos);
-        if (!foundHeader && line.rfind(header, 0) == 0) {
+        if (!foundHeader && line.rfind(CNFHeader, 0) == 0) {
             // header
-            pos += header.size();
+            pos += CNFHeader.size();
             numberOfVariables = ParseNumber<Variable>(line, pos);
             numberOfClauses = ParseNumber<Variable>(line, pos);
             foundHeader = true;

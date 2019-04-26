@@ -34,6 +34,10 @@
     <ClCompile Include="Utility\TimeLimit.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\CNFWriter.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Types\Clause.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -67,6 +71,12 @@
       <Filter>Types</Filter>
     </ClInclude>
     <ClInclude Include="Utility\TimeLimit.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CNFWriter.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CNFConstants.h">
       <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
