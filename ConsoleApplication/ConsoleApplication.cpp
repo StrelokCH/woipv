@@ -13,6 +13,8 @@
 
 #include "SifferDP/SifferDPSolver.h"
 
+#include "CryptoMiniSat/CryptoMiniSatSolver.h"
+
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
 
 int main(int argc, char *argv[])
