@@ -7,9 +7,12 @@
     <ClInclude Include="CryptoMiniSatSolver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CryptoMiniSat.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="CryptoMiniSatSolver.cpp" />
+    <ClCompile Include="CryptoMiniSat.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="cryptominisat5-win-amd64.exe" />
   </ItemGroup>
 </Project>
