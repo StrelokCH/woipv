@@ -39,7 +39,7 @@ size_t Assignment::Size() const
 std::ostream& operator<<(std::ostream& out, const Assignment& a)
 {
     for (decltype(a.Size()) i = 1; i < a.Size(); i++) {
-        switch (a.GetState(i)) {
+        switch (a.GetState(static_cast<Variable>(i))) {
             case VariableState::Undefined:
                 out << '?' << i;
                 break;
