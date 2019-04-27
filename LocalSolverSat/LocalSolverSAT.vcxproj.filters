@@ -141,4 +141,9 @@
       <Filter>LocalSolver</Filter>
     </Library>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="LocalSolver\localsolver.dll">
+      <Filter>LocalSolver</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
 </Project>
