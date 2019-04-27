@@ -3,6 +3,24 @@
 
 #include "Gurobi/gurobi_c++.h"
 
+// defines to get rid of the IntelliSense errors
+#pragma region backup gurobi defines
+
+#ifndef GRB_BINARY
+constexpr auto GRB_BINARY = 'B';
+#endif
+#ifndef GRB_OPTIMAL
+constexpr auto  GRB_OPTIMAL = 2;
+#endif
+#ifndef GRB_INFEASIBLE
+constexpr auto  GRB_INFEASIBLE = 3;
+#endif
+#ifndef GRB_TIME_LIMIT
+constexpr auto  GRB_TIME_LIMIT = 9;
+#endif
+
+#pragma endregion
+
 Assignment CreateAssignment(const std::vector<GRBVar>& variables)
 {
     Assignment assignment(static_cast<Variable>(variables.size() - 1));
