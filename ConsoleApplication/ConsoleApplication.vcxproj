@@ -180,6 +180,9 @@
     <ProjectReference Include="..\Gurobi\Gurobi.vcxproj">
       <Project>{e8a247c3-d34e-42b4-8f67-1810d622cc1b}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LocalSolverSat\LocalSolverSAT.vcxproj">
+      <Project>{73ffe229-a601-4fc3-aaad-8c0a78374f8c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Partitioning\Partitioning.vcxproj">
       <Project>{5a3c956f-db77-4ef0-975f-ea5de531a926}</Project>
     </ProjectReference>
