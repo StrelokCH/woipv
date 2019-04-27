@@ -51,7 +51,7 @@ std::string CreateExecCommand(std::string inputFilename, OptionalTimeLimitMs tim
     if (timeLimit) {
         auto timeLimitSeconds = std::chrono::duration_cast<std::chrono::seconds>(timeLimit.value()).count();
         if (timeLimitSeconds == 0) {
-            std::cout << "warning: minimal timelimit of CryptoMiniSatSolver should be 1 second" << std::endl;
+            std::cout << "warning: minimal timelimit of CryptoMiniSatSolver is 1 second" << std::endl;
             timeLimitSeconds = 1;
         }
         ret += Blank + TimeLimitOption + Blank + std::to_string(timeLimitSeconds);
