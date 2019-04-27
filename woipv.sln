@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptoMiniSat", "CryptoMini
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gurobi", "Gurobi\Gurobi.vcxproj", "{E8A247C3-D34E-42B4-8F67-1810D622CC1B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LocalSolver", "LocalSolver\LocalSolver.vcxproj", "{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{E8A247C3-D34E-42B4-8F67-1810D622CC1B}.Release|x64.Build.0 = Release|x64
 		{E8A247C3-D34E-42B4-8F67-1810D622CC1B}.Release|x86.ActiveCfg = Release|Win32
 		{E8A247C3-D34E-42B4-8F67-1810D622CC1B}.Release|x86.Build.0 = Release|Win32
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Debug|x64.ActiveCfg = Debug|x64
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Debug|x64.Build.0 = Debug|x64
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Debug|x86.ActiveCfg = Debug|Win32
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Debug|x86.Build.0 = Debug|Win32
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Release|x64.ActiveCfg = Release|x64
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Release|x64.Build.0 = Release|x64
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Release|x86.ActiveCfg = Release|Win32
+		{73FFE229-A601-4FC3-AAAD-8C0A78374F8C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
