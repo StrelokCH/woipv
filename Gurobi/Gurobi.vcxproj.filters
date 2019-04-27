@@ -5,11 +5,30 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="DLLMakro.h" />
     <ClInclude Include="GurobiSolver.h" />
+    <ClInclude Include="Gurobi\gurobi_c.h">
+      <Filter>Gurobi</Filter>
+    </ClInclude>
+    <ClInclude Include="Gurobi\gurobi_c++.h">
+      <Filter>Gurobi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Gurobi.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="GurobiSolver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Gurobi">
+      <UniqueIdentifier>{6e39f185-5451-4e7e-b092-d2034116cb5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Gurobi\gurobi_c++mtd2017.lib">
+      <Filter>Gurobi</Filter>
+    </Library>
+    <Library Include="Gurobi\gurobi80.lib">
+      <Filter>Gurobi</Filter>
+    </Library>
   </ItemGroup>
 </Project>
