@@ -59,7 +59,7 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
         }
 
         // Todo: verify usefulness of this constraint
-        model.addConstraint(expr == 1);
+        model.addConstraint(expr >= 1.0);
 
         numberOfSatClauses += model.iif(expr >= 1, 1, 0);
     }
@@ -89,9 +89,9 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
     // check result
     auto solutionStatus = localsolver.getSolution().getStatus();
     switch (solutionStatus) {
-        case SS_Infeasible:
         case SS_Inconsistent:
             return {SolvingResult::Unsatisfiable, {}};
+        case SS_Infeasible:
         case SS_Feasible:
             // not finished
             return {SolvingResult::Undefined, {}};
