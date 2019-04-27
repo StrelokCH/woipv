@@ -78,6 +78,7 @@ std::pair<SolvingResult, std::optional<Assignment>> GurobiSolver::Solve(const Pr
         model.set(GRB_DoubleParam_MIPGap, 1.0);
         model.optimize();
 
+        // return result
         auto status = model.get(GRB_IntAttr_Status);
         if (status == GRB_OPTIMAL) {
             return {SolvingResult::Satisfiable, CreateAssignment(variables)};
