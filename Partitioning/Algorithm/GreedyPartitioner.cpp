@@ -361,7 +361,13 @@ Solution GreedyPartitioner::TrySolve(const Problem& problem, const std::vector<s
     CheckTimeLimit();
 
     if (depth > problem.GetNumberOfVariables()) {
-        return {problem.Apply(assignment), assignment};
+        return TrySolve(problem, partitions, cutSet, assignment);
+    }
+
+    if (cutSet.find(depth) == cutSet.end()) {
+        // variable is not part of the cutSet
+        // -> don't assign
+        return TrySolve(problem, partitions, cutSet, assignment, depth + 1);
     }
 
     // try true
