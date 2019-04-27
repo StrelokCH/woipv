@@ -12,8 +12,9 @@
 #include "Core/Interfaces/SATSolver.h"
 
 #include "SifferDP/SifferDPSolver.h"
-
 #include "CryptoMiniSat/CryptoMiniSatSolver.h"
+#include "Gurobi/GurobiSolver.h"
+#include "LocalSolverSat/LocalSolverSat.h"
 
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
 
@@ -34,7 +35,11 @@ int main(int argc, char *argv[])
     auto p = ParseCNF(infile);
     auto a = Assignment(5);
 
-    auto s = std::make_shared<SifferDPSolver>();
+    //auto s = std::make_shared<GurobiSolver>();
+    //auto s = std::make_shared<CryptoMiniSatSolver>();
+    auto s = std::make_shared<LocalSolverSat>();
+
+    auto ret = s->Solve(p, std::chrono::milliseconds(100));
 
     auto part = GreedyPartitioner();
     part.SetPartitionSolver(s);
