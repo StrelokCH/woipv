@@ -18,6 +18,6 @@ bool HasRemaining(OptionalTimeLimitMs timeLimit, std::chrono::steady_clock::time
         return true;
     }
 
-    auto elapsed = start - std::chrono::steady_clock::now();
-    return timeLimit.value() < elapsed;
+    auto elapsed = std::chrono::steady_clock::now() - start;
+    return timeLimit.value() > elapsed;
 }
