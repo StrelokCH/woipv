@@ -18,6 +18,9 @@
 
 int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLimitMs timeLimit)
 {
+    if (outputFile.rfind(".csv", outputFile.size() - 4) != -1) {
+        throw std::runtime_error("output must not be a csv file");
+    }
 
     std::ifstream infile(instance);
     if (!infile) {
