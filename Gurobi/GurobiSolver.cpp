@@ -49,6 +49,7 @@ Assignment CreateAssignment(const std::vector<GRBVar>& variables)
 std::pair<SolvingResult, std::optional<Assignment>> GurobiSolver::Solve(const Problem & problem, OptionalTimeLimitMs timeLimit)
 {
     try {
+        auto start = std::chrono::steady_clock::now();
 
         // create an environment
         GRBEnv env = GRBEnv(true);
@@ -83,9 +84,10 @@ std::pair<SolvingResult, std::optional<Assignment>> GurobiSolver::Solve(const Pr
         }
 
         // settings
+        timeLimit = GetRemaining(timeLimit, start);
         if (timeLimit) {
             auto timeLimitSeconds = std::chrono::duration_cast<std::chrono::seconds>(timeLimit.value()).count();
-            if (timeLimitSeconds == 0) {
+            if (timeLimitSeconds <= 0) {
                 std::cout << "warning: minimal timelimit of Gurobi is 1 second" << std::endl;
                 timeLimitSeconds = 1;
             }

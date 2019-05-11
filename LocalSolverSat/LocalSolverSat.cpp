@@ -34,6 +34,8 @@ Assignment CreateAssignment(const std::vector<localsolver::LSExpression>& variab
 
 std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const Problem & problem, OptionalTimeLimitMs timeLimit)
 {
+    auto start = std::chrono::steady_clock::now();
+
     // Declares the optimization model.
     LocalSolver localsolver;
     LSModel model = localsolver.getModel();
@@ -74,9 +76,10 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
     localsolver.getParam().setObjectiveBound(0, static_cast<lsint>(problem.GetClauses().size()));
 
     // set time limit if needed
+    timeLimit = GetRemaining(timeLimit, start);
     if (timeLimit) {
         auto timeLimitSeconds = std::chrono::duration_cast<std::chrono::seconds>(timeLimit.value()).count();
-        if (timeLimitSeconds == 0) {
+        if (timeLimitSeconds <= 0) {
             std::cout << "warning: minimal timelimit of CryptoMiniSatSolver is 1 second" << std::endl;
             timeLimitSeconds = 1;
         }
