@@ -14,13 +14,24 @@
 
 std::string GetHeader()
 {
-    return "problem;instance name;clauses;variables;density(C / V);avg clause length;min clause length;max clause length;avg number of variable occurences;min number of variable occurences;max number of variable occurences;CryptoMiniSat;CryptoMiniSat time;Gurobi;Gurobi time;LocalSolver;LocalSolver time;valid;";
+    return "time;problem;instance name;clauses;variables;density(C / V);avg clause length;min clause length;max clause length;avg number of variable occurences;min number of variable occurences;max number of variable occurences;CryptoMiniSat;CryptoMiniSat time;Gurobi;Gurobi time;LocalSolver;LocalSolver time;valid;";
 }
 
 std::string GetContent(const std::filesystem::path& path, const Problem& problem, const std::vector<SolvingResult>& results, const std::vector<std::chrono::milliseconds>& elapsed)
 {
     const char Separator = ';';
     std::stringstream ret;
+
+    // time
+    {
+        // warning: cancerous code
+        auto now = std::chrono::system_clock::now();
+        std::time_t end_time = std::chrono::system_clock::to_time_t(now);
+        char str[26];
+        ctime_s(str, sizeof str, &end_time);
+        str[strnlen_s(str, 26) - 1] = '\0'; // remove \n
+        ret << str << Separator;
+    }
 
     // problem
     ret << path << Separator;
