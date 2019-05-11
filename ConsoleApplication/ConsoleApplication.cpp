@@ -15,5 +15,5 @@ int main(int argc, char *argv[])
     }
 
     //return SingleInstance({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
-    return Benchmark({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
+    return Benchmark({argv[1]}, {argv[2]}, std::chrono::milliseconds(1000 * 100));
 }
