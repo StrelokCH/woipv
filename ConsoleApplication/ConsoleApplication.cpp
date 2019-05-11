@@ -14,5 +14,6 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
-    return SingleInstance({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
+    //return SingleInstance({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
+    return Benchmark({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
 }
