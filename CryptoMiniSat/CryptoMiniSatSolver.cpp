@@ -19,13 +19,15 @@ const std::string TimeLimitOption = "--maxtime";
 
 std::string exec(const std::string cmd)
 {
-    std::array<char, 128> buffer;
+    const size_t BufferSize = 128;
+    static_assert(BufferSize < std::numeric_limits<int>::max(), "BufferSize will be casted to int as fgets only accepts int");
+    std::array<char, BufferSize> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(cmd.c_str(), "r"), _pclose);
     if (!pipe) {
         throw std::runtime_error("popen() in CryptoMiniSatSolver failed!");
     }
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+    while (fgets(buffer.data(), static_cast<int>(buffer.size()), pipe.get()) != nullptr) {
         result += buffer.data();
     }
     return result;
