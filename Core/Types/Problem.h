@@ -39,5 +39,16 @@ public:
 
     const std::vector<Clause>& GetClauses() const;
     const Variable& GetNumberOfVariables() const;
+    double GetDensity() const;
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns>avg,min,max</returns>
+    std::tuple<double, size_t, size_t> GetClauseLength() const;
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns>avg,min,max</returns>
+    std::tuple<double, size_t, size_t> GetNumberOfVariableOccurences() const;
 };
 
