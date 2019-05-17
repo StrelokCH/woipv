@@ -9,10 +9,13 @@
   <ItemGroup>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="DLLMakro.h" />
+    <ClInclude Include="Algorithm\AbstractPartitioner.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
     <ClInclude Include="Algorithm\GreedyPartitioner.h">
       <Filter>Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="DLLMakro.h" />
     <ClInclude Include="Algorithm\TimeLimitError.h">
       <Filter>Algorithm</Filter>
     </ClInclude>
@@ -21,6 +24,9 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Partitioning.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Algorithm\AbstractPartitioner.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
     <ClCompile Include="Algorithm\GreedyPartitioner.cpp">
       <Filter>Algorithm</Filter>
     </ClCompile>

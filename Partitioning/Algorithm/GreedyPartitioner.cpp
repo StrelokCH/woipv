@@ -7,14 +7,11 @@
 #include <algorithm>
 #include <map>
 
-Solution GreedyPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs optionalTimeLimit)
+Solution GreedyPartitioner::SolveInternal(const Problem& problem)
 {
     if (!partitionSolver) {
         throw std::runtime_error("missing partition solver");
     }
-
-    start = std::chrono::steady_clock::now();
-    timeLimit = optionalTimeLimit;
 
     try {
         auto partitions = CreatePartitions(problem);
@@ -287,7 +284,7 @@ bool GreedyPartitioner::IsBadPartitioning(const std::vector<Problem>& problems)
     return counter <= 1;
 }
 
-std::vector<Solution> GreedyPartitioner::InternalSolve(std::vector<Problem>& problems)
+std::vector<Solution> GreedyPartitioner::SolveInternal(std::vector<Problem>& problems)
 {
     CheckTimeLimit();
 
@@ -350,7 +347,7 @@ Solution GreedyPartitioner::TrySolve(const Problem & problem, const std::vector<
         // solve original problem directly
         result = partitionSolver->Solve(problem, GetRemainingTimeLimit());
     } else {
-        auto solutions = InternalSolve(problems);
+        auto solutions = SolveInternal(problems);
         result = Merge(problem, partitions, cutSet, assignment, solutions);
     }
     return result;
@@ -380,16 +377,4 @@ Solution GreedyPartitioner::TrySolve(const Problem& problem, const std::vector<s
     // try false
     assignment.SetState(depth, VariableState::False);
     return TrySolve(problem, partitions, cutSet, assignment, depth + 1);
-}
-
-void GreedyPartitioner::CheckTimeLimit()
-{
-    if (!HasRemaining(timeLimit, start)) {
-        throw TimeLimitError();
-    }
-}
-
-OptionalTimeLimitMs GreedyPartitioner::GetRemainingTimeLimit()
-{
-    return GetRemaining(timeLimit, start);
 }
