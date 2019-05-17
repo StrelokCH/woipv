@@ -108,7 +108,7 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
     {
         solvers.push_back(std::make_shared<CryptoMiniSatSolver>());
         solvers.push_back(std::make_shared<GurobiSolver>());
-        //solvers.push_back(std::make_shared<LocalSolverSat>());
+        solvers.push_back(std::make_shared<LocalSolverSat>());
     }
 
     // setup output
