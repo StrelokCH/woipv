@@ -38,7 +38,7 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
 
     // Declares the optimization model.
     LocalSolver localsolver;
-    LSModel model = localsolver.getModel();
+    auto model = localsolver.getModel();
 
     // create variables
     std::vector<LSExpression> variables;
@@ -49,21 +49,21 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
     }
 
     // get expression for number of satisfied clauses
-    LSExpression numberOfSatClauses = model.sum();
+    auto numberOfSatClauses = model.sum();
     for (auto clause : problem.GetClauses()) {
-        LSExpression expr = model.sum();
+        auto sum = model.sum();
         for (auto literal : clause) {
             if (IsPositive(literal)) {
-                expr += variables[literal];
+                sum += variables[literal];
             } else {
-                expr += (1 - variables[Negate(literal)]);
+                sum += (1 - variables[Negate(literal)]);
             }
         }
 
         // Todo: verify usefulness of this constraint
-        model.addConstraint(expr >= 1.0);
+        model.addConstraint(sum >= 1.0);
 
-        numberOfSatClauses += model.iif(expr >= 1, 1, 0);
+        numberOfSatClauses += model.iif(sum >= 1, 1, 0);
     }
 
     // maximize number of sat clauses
@@ -83,7 +83,7 @@ std::pair<SolvingResult, std::optional<Assignment>> LocalSolverSat::Solve(const 
             std::cout << "warning: minimal timelimit of CryptoMiniSatSolver is 1 second" << std::endl;
             timeLimitSeconds = 1;
         }
-        LSPhase phase = localsolver.createPhase();
+        auto phase = localsolver.createPhase();
         phase.setTimeLimit(static_cast<int>(timeLimitSeconds));
     }
 
