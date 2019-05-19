@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
-#if tru
+#if true
     // "instance/input.cnf" "instance/solution.txt"
-    return SingleInstance({argv[1]}, {argv[2]}, std::chrono::milliseconds(5000));
+    return SingleInstance({argv[1]}, {argv[2]}, {});
 #else
     // "C:\Test\woipv\test" "instance/solution.csv"
     return Benchmark({argv[1]}, {argv[2]}, std::chrono::milliseconds(1000 * 100));
