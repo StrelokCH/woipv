@@ -36,7 +36,7 @@ Solution OnePointPartitioner::SolveExt(const Problem& problem, OptionalTimeLimit
     // merge partitions if they have at least two connections
     MergePartitionsC2(partitions);
 
-    return {SolvingResult::Undefined, {}};
+    return {SolvingResult::Satisfiable, {}};
 
     // Todo
     /* Solution result = SolveSubproblems(problem, partitions);

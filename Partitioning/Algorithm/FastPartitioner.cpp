@@ -58,7 +58,7 @@ Solution FastPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs t
     }
     subproblems.clear();
 
-    return {SolvingResult::Undefined, {}};
+    return {SolvingResult::Unsatisfiable, {}};
 
     // Todo
     // auto solutions = partitionSolver->Solve(problems, GetRemainingTimeLimit());
