@@ -30,7 +30,6 @@ int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLim
         return EXIT_FAILURE;
     }
 
-    // Todo: solve
     auto problem = ParseCNF(infile);
 
     std::shared_ptr<SATSolver> solver = std::make_shared<GurobiSolver>();

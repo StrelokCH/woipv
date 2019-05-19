@@ -6,13 +6,8 @@
 #include <iterator>
 #include <iostream>
 
-// Todo
-#include <sstream>
-#include "TimeLimitError.h"
-#include "Windows.h"
-
 template <class I1, class I2>
-bool have_common_element(I1 e1, I2 e2)
+bool HaveCommonElement(I1 e1, I2 e2)
 {
     auto first1 = e1.begin();
     auto last1 = e1.end();
@@ -41,7 +36,8 @@ Solution FastPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs time
     std::vector<std::set<Variable>> partitions;
 
     auto clauses = problem.GetClauses();
-    {
+
+    auto CreateNewPartition = [&]() {
         subproblems.push_back({clauses[0]});
         std::set<Variable> varClause;
         std::transform(clauses[0].begin(), clauses[0].end(), std::inserter(varClause, varClause.begin()), [](auto lit) {
@@ -49,7 +45,9 @@ Solution FastPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs time
         });
         partitions.push_back(varClause);
         clauses.erase(clauses.begin());
-    }
+    };
+
+    CreateNewPartition();
 
     for (size_t partition = 0; !clauses.empty(); partition++) {
         bool foundOne = false;
@@ -60,7 +58,7 @@ Solution FastPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs time
             std::transform(clauses[i].begin(), clauses[i].end(), std::inserter(varClause, varClause.begin()), [](auto lit) {
                 return ToVariable(lit);
             });
-            if (have_common_element(partitions[partition], varClause)) {
+            if (HaveCommonElement(partitions[partition], varClause)) {
                 foundOne = true;
                 subproblems[partition].push_back(clauses[i]);
                 partitions[partition].insert(varClause.begin(), varClause.end());
@@ -71,33 +69,8 @@ Solution FastPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs time
         if (foundOne) {
             partition--;
         } else {
-            // todo dry
-            subproblems.push_back({clauses[0]});
-            std::set<Variable> varClause;
-            std::transform(clauses[0].begin(), clauses[0].end(), std::inserter(varClause, varClause.begin()), [](auto lit) {
-                return ToVariable(lit);
-            });
-            partitions.push_back(varClause);
-            clauses.erase(clauses.begin());
+            CreateNewPartition();
         }
-    }
-
-    if (partitions.size() < 2) {
-        // Todo: remove
-        // temporary only focus on disconnected problems
-        OutputDebugStringW(L"\tConnected");
-        throw TimeLimitError();
-    } else {
-
-        // output result
-        std::stringstream output;
-        output << "\t";
-        for (auto p : subproblems) {
-            output << p.size() << ", ";
-        }
-        output << "(# clauses per partition)";
-
-        OutputDebugStringA(output.str().c_str());
     }
 
     std::vector<Problem> problems;

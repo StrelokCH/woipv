@@ -6,9 +6,6 @@
 #include <iterator>
 #include <iostream>
 
-// Todo
-#include "TimeLimitError.h"
-
 std::vector<std::set<Variable>> DisconnectedPartitioner::CreatePartitions(const Problem & problem)
 {
     // build neighbour list
@@ -53,12 +50,6 @@ std::vector<std::set<Variable>> DisconnectedPartitioner::CreatePartitions(const 
     }
 
     RemoveEmptyPartitions(partitions);
-
-    if (partitions.size() < 2) {
-        // Todo: remove
-        // temporary only focus on disconnected problems
-        throw TimeLimitError();
-    }
 
     return partitions;
 }

@@ -6,9 +6,6 @@
 #include <filesystem>
 #include <sstream>
 
-// Todo
-#include <Windows.h>
-
 #include "CryptoMiniSat/CryptoMiniSatSolver.h"
 #include "Gurobi/GurobiSolver.h"
 #include "LocalSolverSat/LocalSolverSat.h"
@@ -150,11 +147,6 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
     for (auto instance : std::filesystem::recursive_directory_iterator(directory)) {
         try {
             if (!std::filesystem::is_directory(instance)) {
-
-
-                OutputDebugStringA("\n");
-                OutputDebugStringW(instance.path().filename().c_str());
-
                 std::ifstream infile(instance.path());
                 if (!infile) {
                     std::cout << "Could not open input file (" << instance.path() << ").";
