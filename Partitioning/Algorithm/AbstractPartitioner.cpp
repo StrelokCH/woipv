@@ -1,3 +1,4 @@
+#include "Partitioning/stdafx.h"
 #include "AbstractPartitioner.h"
 
 #include <algorithm>
@@ -146,7 +147,7 @@ Solution AbstractPartitioner::TrySolve(const Problem& problem, const std::vector
 
 std::vector<Problem> AbstractPartitioner::CreateSubProblems(const Problem& problem, const std::vector<std::set<Variable>>& partitions, const Assignment& assignment)
 {
-    auto simplifiedProblem = SimplifyClauses(problem, assignment);
+    auto simplifiedProblem = SimplifyClauses(problem.GetClauses(), assignment);
 
     // assign each clause to a subproblem
     std::vector<std::vector<Clause>> subProblems(partitions.size());
@@ -172,29 +173,29 @@ std::vector<Problem> AbstractPartitioner::CreateSubProblems(const Problem& probl
     return ret;
 }
 
-std::vector<Clause> AbstractPartitioner::SimplifyClauses(const Problem& problem, const Assignment& assignment)
+std::vector<Clause> AbstractPartitioner::SimplifyClauses(const std::vector<Clause>& clauses, const Assignment& assignment)
 {
-    auto simplifiedClauses = problem.GetClauses();
-    {
-        // delete clauses that are satisfied by the assignment
-        size_t clauseIndex = 0;
-        for (auto& clause : problem.GetClauses()) {
-            auto simplifed = false;
-            for (auto& literal : clause) {
-                CheckTimeLimit();
-                if (assignment.IsSAT(literal)) {
-                    // clause can be deleted as it is satisfied
-                    simplifiedClauses.erase(simplifiedClauses.begin() + clauseIndex);
-                    simplifed = true;
-                    break;
-                }
-            }
-            if (!simplifed) {
-                clauseIndex++;
+    auto copy = clauses;
+    SimplifyClausesDirect(copy, assignment);
+    return clauses;
+}
+
+void AbstractPartitioner::SimplifyClausesDirect(std::vector<Clause>& clauses, const Assignment& assignment)
+{
+    // delete clauses that are satisfied by the assignment
+    for (size_t i = 0; i < clauses.size(); i++) {
+        auto& clause = clauses[i];
+        auto simplifed = false;
+        for (auto& literal : clause) {
+            CheckTimeLimit();
+            if (assignment.IsSAT(literal)) {
+                // clause can be deleted as it is satisfied
+                clauses.erase(clauses.begin() + i);
+                i--;
+                break;
             }
         }
     }
-    return simplifiedClauses;
 }
 
 std::vector<Solution> AbstractPartitioner::SolveInternal(std::vector<Problem>& problems)

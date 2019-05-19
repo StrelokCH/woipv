@@ -84,7 +84,8 @@ protected:
     virtual Solution TrySolve(const Problem& problem, const std::vector<std::set<Variable>>& partitions, const std::set<Variable>& cutSet, Assignment& assignment, Variable depth);
 
     virtual std::vector<Problem> CreateSubProblems(const Problem& problem, const std::vector<std::set<Variable>>& partitions, const Assignment& assignment);
-    virtual std::vector<Clause> SimplifyClauses(const Problem& problem, const Assignment& assignment);
+    virtual std::vector<Clause> SimplifyClauses(const std::vector<Clause>& clauses, const Assignment& assignment);
+    virtual void SimplifyClausesDirect(std::vector<Clause>& clauses, const Assignment& assignment);
     virtual std::vector<Solution> SolveInternal(std::vector<Problem>& problems);
     virtual Solution Merge(const Problem& problem, const std::vector<std::set<Variable>>& partitions, const std::set<Variable>& cutSet, const Assignment& assignment, const std::vector<Solution> solutions);
     void RemoveEmptyPartitions(std::vector<std::set<Variable>>& partitions);
