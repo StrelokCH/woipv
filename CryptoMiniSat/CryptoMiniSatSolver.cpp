@@ -131,6 +131,8 @@ std::pair<SolvingResult, std::optional<Assignment>> ParseResult(std::string resu
 
 std::pair<SolvingResult, std::optional<Assignment>> CryptoMiniSatSolver::Solve(const Problem& problem, OptionalTimeLimitMs timeLimit)
 {
+    auto start = std::chrono::steady_clock::now();
+
     auto input = getUniqueFilename();
     {
         std::ofstream tempFile(input);
@@ -147,6 +149,6 @@ std::pair<SolvingResult, std::optional<Assignment>> CryptoMiniSatSolver::Solve(c
     };
     std::unique_ptr<std::string, decltype(fileDeleter)> inputCleanup(new std::string(input), fileDeleter);
 
-    auto result = exec(CreateExecCommand(input, timeLimit));
+    auto result = exec(CreateExecCommand(input, GetRemaining(timeLimit, start)));
     return ParseResult(result, problem.GetNumberOfVariables());
 }
