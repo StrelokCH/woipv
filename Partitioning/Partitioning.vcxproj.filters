@@ -19,6 +19,12 @@
     <ClInclude Include="Algorithm\TimeLimitError.h">
       <Filter>Algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\DisconnectedPartitioner.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\FastPartitioner.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -28,6 +34,12 @@
       <Filter>Algorithm</Filter>
     </ClCompile>
     <ClCompile Include="Algorithm\GreedyPartitioner.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\DisconnectedPartitioner.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\FastPartitioner.cpp">
       <Filter>Algorithm</Filter>
     </ClCompile>
   </ItemGroup>

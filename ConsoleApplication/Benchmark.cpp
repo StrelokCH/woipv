@@ -6,11 +6,16 @@
 #include <filesystem>
 #include <sstream>
 
+// Todo
+#include <Windows.h>
+
 #include "CryptoMiniSat/CryptoMiniSatSolver.h"
 #include "Gurobi/GurobiSolver.h"
 #include "LocalSolverSat/LocalSolverSat.h"
+#include "Partitioning/Algorithm/DisconnectedPartitioner.h"
+#include "Partitioning/Algorithm/FastPartitioner.h"
+#include "Partitioning/Algorithm/GreedyPartitioner.h"
 #include "Core/Utility/CNFParser.h"
-#include "Core/Utility/TimeLimit.h"
 
 std::string GetHeader()
 {
@@ -106,9 +111,29 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
     // setup solvers
     std::vector<std::shared_ptr<SATSolver>> solvers;
     {
-        solvers.push_back(std::make_shared<CryptoMiniSatSolver>());
-        solvers.push_back(std::make_shared<GurobiSolver>());
-        solvers.push_back(std::make_shared<LocalSolverSat>());
+        //solvers.push_back(std::make_shared<CryptoMiniSatSolver>());
+        //solvers.push_back(std::make_shared<GurobiSolver>());
+        //solvers.push_back(std::make_shared<LocalSolverSat>());
+        {
+            auto s = std::make_shared<FastPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
+        }
+        {
+            auto s = std::make_shared<FastPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+        }
+        /*{
+            auto s = std::make_shared<GreedyPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
+        }
+        {
+            auto s = std::make_shared<GreedyPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+        }*/
     }
 
     // setup output
@@ -125,6 +150,11 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
     for (auto instance : std::filesystem::recursive_directory_iterator(directory)) {
         try {
             if (!std::filesystem::is_directory(instance)) {
+
+
+                OutputDebugStringA("\n");
+                OutputDebugStringW(instance.path().filename().c_str());
+
                 std::ifstream infile(instance.path());
                 if (!infile) {
                     std::cout << "Could not open input file (" << instance.path() << ").";
@@ -137,10 +167,17 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
                 std::vector<std::chrono::milliseconds> elapsed;
                 for (auto solver : solvers) {
                     auto start = std::chrono::steady_clock::now();
-                    // solve
-                    results.push_back(solver->Solve(problem, timeLimitPerInstance).first);
-                    // measure time
-                    elapsed.push_back(std::chrono::duration_cast<std::chrono::milliseconds>(GetElapsed(start)));
+
+                    try {
+                        // solve
+                        results.push_back(solver->Solve(problem, timeLimitPerInstance).first);
+                        // measure time
+                        elapsed.push_back(std::chrono::duration_cast<std::chrono::milliseconds>(GetElapsed(start)));
+
+                    } catch (std::exception e) {
+                        // avoid early terminination of benchmark
+                        std::cout << e.what() << "(solver), instance: " << instance.path() << std::endl;
+                    }
                 }
 
                 // log

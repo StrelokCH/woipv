@@ -15,6 +15,8 @@
 #include "LocalSolverSat/LocalSolverSat.h"
 
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
+#include "Partitioning/Algorithm/DisconnectedPartitioner.h"
+#include "Partitioning/Algorithm/FastPartitioner.h"
 
 int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLimitMs timeLimit)
 {
@@ -29,19 +31,21 @@ int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLim
     }
 
     // Todo: solve
-    auto p = ParseCNF(infile);
-    auto a = Assignment(5);
+    auto problem = ParseCNF(infile);
 
-    auto s = std::make_shared<GurobiSolver>();
+    std::shared_ptr<SATSolver> solver = std::make_shared<GurobiSolver>();
     //auto s = std::make_shared<CryptoMiniSatSolver>();
     //auto s = std::make_shared<LocalSolverSat>();
 
-    auto ret = s->Solve(p, timeLimit);
+#if true // use partitioning
+    auto part = std::make_shared<FastPartitioner>();
+    //auto part = std::make_shared<DisconnectedPartitioner>();
+    //auto part = std::make_shared<GreedyPartitioner>();
+    part->SetPartitionSolver(solver);
+    solver = part;
+#endif
 
-    auto part = GreedyPartitioner();
-    part.SetPartitionSolver(s);
-
-    auto[solvingResult, assignment] = part.Solve(p, timeLimit);
+    auto[solvingResult, assignment] = solver->Solve(problem, timeLimit);
 
     // output result
     std::stringstream output;
@@ -61,9 +65,14 @@ int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLim
     output << std::endl;
     if (assignment) {
         output << assignment.value();
+        // validate assignment
+        if (problem.Apply(assignment.value()) != solvingResult) {
+            output << "ERROR: Assignment does not give the expected solution.";
+        }
     } else {
         output << "no assignment";
     }
+
     std::cout << output.str();
 
     // write result to file

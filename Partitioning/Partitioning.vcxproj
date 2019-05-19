@@ -160,6 +160,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm\AbstractPartitioner.h" />
+    <ClInclude Include="Algorithm\DisconnectedPartitioner.h" />
+    <ClInclude Include="Algorithm\FastPartitioner.h" />
     <ClInclude Include="Algorithm\GreedyPartitioner.h" />
     <ClInclude Include="Algorithm\TimeLimitError.h" />
     <ClInclude Include="DLLMakro.h" />
@@ -168,6 +170,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Algorithm\AbstractPartitioner.cpp" />
+    <ClCompile Include="Algorithm\DisconnectedPartitioner.cpp" />
+    <ClCompile Include="Algorithm\FastPartitioner.cpp" />
     <ClCompile Include="Algorithm\GreedyPartitioner.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Partitioning.cpp" />
