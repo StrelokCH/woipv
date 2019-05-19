@@ -7,32 +7,41 @@
 
 Solution AbstractPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs optionalTimeLimit)
 {
-    BeforeSolve(problem, optionalTimeLimit);
+    start = std::chrono::steady_clock::now();
+    timeLimit = optionalTimeLimit;
+
+    if (!partitionSolver) {
+        throw std::runtime_error("missing partition solver");
+    }
 
     try {
-        auto partitions = CreatePartitions(problem);
-        RemoveEmptyPartitions(partitions);
-        if (partitions.size() <= 1) {
-            // no valid partitions
-            return partitionSolver->Solve(problem, GetRemainingTimeLimit());
-        }
-        auto cutSet = FindCutSet(partitions);
-
-        // optimistic approach
-        auto assignment = CreateOptimisticAssignment(problem, cutSet);
-        auto result = TrySolve(problem, partitions, cutSet, assignment);
-        if (result.first == SolvingResult::Satisfiable) {
-            return result;
-        }
-
-        // try solve recursivly
-        assignment = Assignment(problem.GetNumberOfVariables());
-        return TrySolve(problem, partitions, cutSet, assignment, FirstVariable);
-
+        return SolveExt(problem, optionalTimeLimit);
     } catch (TimeLimitError&) {
         // time limit exceeded
         return {SolvingResult::Undefined, {}};
     }
+}
+
+Solution AbstractPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs optionalTimeLimit)
+{
+    auto partitions = CreatePartitions(problem);
+    RemoveEmptyPartitions(partitions);
+    if (partitions.size() <= 1) {
+        // no valid partitions
+        return partitionSolver->Solve(problem, GetRemainingTimeLimit());
+    }
+    auto cutSet = FindCutSet(partitions);
+
+    // optimistic approach
+    auto assignment = CreateOptimisticAssignment(problem, cutSet);
+    auto result = TrySolve(problem, partitions, cutSet, assignment);
+    if (result.first == SolvingResult::Satisfiable) {
+        return result;
+    }
+
+    // try solve recursivly
+    assignment = Assignment(problem.GetNumberOfVariables());
+    return TrySolve(problem, partitions, cutSet, assignment, FirstVariable);
 }
 
 std::set<Literal> AbstractPartitioner::FindCutSet(const std::vector<std::set<Variable>>& partitions)
@@ -249,12 +258,6 @@ void AbstractPartitioner::RemoveEmptyPartitions(std::vector<std::set<Variable>>&
 
 void AbstractPartitioner::BeforeSolve(const Problem& problem, OptionalTimeLimitMs optionalTimeLimit)
 {
-    start = std::chrono::steady_clock::now();
-    timeLimit = optionalTimeLimit;
-
-    if (!partitionSolver) {
-        throw std::runtime_error("missing partition solver");
-    }
 }
 
 void AbstractPartitioner::CheckTimeLimit()

@@ -24,14 +24,8 @@ bool HaveCommonElement(I1 e1, I2 e2)
     return false;
 }
 
-Solution FastPartitioner::Solve(const Problem& problem, OptionalTimeLimitMs timeLimit)
+Solution FastPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs timeLimit)
 {
-    BeforeSolve(problem, timeLimit);
-
-    if (!partitionSolver) {
-        throw std::runtime_error("missing partition solver");
-    }
-
     std::vector<std::vector<Clause>> subproblems;
     std::vector<std::set<Variable>> partitions;
 
