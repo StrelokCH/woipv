@@ -1,3 +1,4 @@
+#include "Partitioning/stdafx.h"
 #include "FastPartitioner.h"
 
 #include <map>
