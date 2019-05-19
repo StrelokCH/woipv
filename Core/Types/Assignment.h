@@ -42,7 +42,14 @@ public:
     /// <returns></returns>
     void SetState(Variable variable, VariableState state);
 
-    size_t Size() const;
+    /// <summary>
+    /// Checked.
+    /// </summary>
+    /// <param name="variable"></param>
+    /// <returns></returns>
+    bool IsCompatible(const Assignment& other) const;
+
+    Variable GetNumberOfVariables() const;
 };
 
 CORE_API std::ostream& operator<<(std::ostream& out, const Assignment& a);

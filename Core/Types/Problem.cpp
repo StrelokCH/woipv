@@ -51,7 +51,7 @@ Problem::~Problem()
 
 SolvingResult Problem::Apply(const Assignment& assignment) const
 {
-    if (numberOfVariables > (signed)assignment.Size()) {
+    if (numberOfVariables > assignment.GetNumberOfVariables()) {
         return SolvingResult::Undefined;
     }
 

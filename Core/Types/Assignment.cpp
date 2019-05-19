@@ -31,14 +31,34 @@ void Assignment::SetState(Variable variable, VariableState state)
     states[variable] = state;
 }
 
-size_t Assignment::Size() const
+bool Assignment::IsCompatible(const Assignment & other) const
 {
-    return states.size();
+    if (this == &other) {
+        return true;
+    }
+    if (GetNumberOfVariables() != other.GetNumberOfVariables()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < states.size(); i++) {
+        if (states[i] == VariableState::False && other.states[i] == VariableState::True) {
+            return false;
+        }
+        if (states[i] == VariableState::True && other.states[i] == VariableState::False) {
+            return false;
+        }
+    }
+    return true;
+}
+
+Variable Assignment::GetNumberOfVariables() const
+{
+    return static_cast<Variable>(states.size() - 1);
 }
 
 std::ostream& operator<<(std::ostream& out, const Assignment& a)
 {
-    for (decltype(a.Size()) i = 1; i < a.Size(); i++) {
+    for (decltype(a.GetNumberOfVariables()) i = 1; i <= a.GetNumberOfVariables(); i++) {
         switch (a.GetState(static_cast<Variable>(i))) {
             case VariableState::Undefined:
                 out << '?' << i;
