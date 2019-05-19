@@ -28,11 +28,11 @@
     <ClInclude Include="Algorithm\FastPartitioner.h">
       <Filter>Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithm\OnePointPartitioner.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\ClauseUtility.h">
       <Filter>Algorithm\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\OnePointPartitioner.h">
+      <Filter>Algorithm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

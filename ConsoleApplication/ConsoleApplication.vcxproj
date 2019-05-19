@@ -192,6 +192,9 @@
     <ProjectReference Include="..\SifferDP\SifferDP.vcxproj">
       <Project>{09461c8d-d8a9-4818-8e53-c0d4fc9ef99f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\SolverPortfolio\SolverPortfolio.vcxproj">
+      <Project>{0ebecdc3-7f09-4b91-860f-0e6f9801194e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

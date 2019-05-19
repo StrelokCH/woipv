@@ -58,9 +58,12 @@ Solution FastPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs t
     }
     subproblems.clear();
 
-    auto solutions = partitionSolver->Solve(problems, GetRemainingTimeLimit());
+    return {SolvingResult::Undefined, {}};
 
-    return Merge(problem, partitions, {}, {problem.GetNumberOfVariables()}, solutions);
+    // Todo
+    // auto solutions = partitionSolver->Solve(problems, GetRemainingTimeLimit());
+    //
+    // return Merge(problem, partitions, {}, {problem.GetNumberOfVariables()}, solutions);
 }
 
 std::vector<std::set<Variable>> FastPartitioner::CreatePartitions(const Problem& problem)

@@ -12,6 +12,7 @@
 #include "Partitioning/Algorithm/DisconnectedPartitioner.h"
 #include "Partitioning/Algorithm/FastPartitioner.h"
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
+#include "Partitioning/Algorithm/OnePointPartitioner.h"
 #include "Core/Utility/CNFParser.h"
 
 std::string GetHeader()
@@ -111,17 +112,18 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
         //solvers.push_back(std::make_shared<CryptoMiniSatSolver>());
         //solvers.push_back(std::make_shared<GurobiSolver>());
         //solvers.push_back(std::make_shared<LocalSolverSat>());
+        //solvers.push_back(std::make_shared<SolverPortfolio>());
         {
             auto s = std::make_shared<FastPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
-        }
-        {
-            auto s = std::make_shared<FastPartitioner>();
-            solvers.push_back(s);
-            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
         }
         /*{
+            auto s = std::make_shared<FastPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+        }
+        {
             auto s = std::make_shared<GreedyPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
@@ -130,7 +132,17 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
             auto s = std::make_shared<GreedyPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+        }
+        {
+            auto s = std::make_shared<OnePointPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
         }*/
+        {
+            auto s = std::make_shared<OnePointPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+        }
     }
 
     // setup output

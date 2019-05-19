@@ -13,10 +13,12 @@
 #include "CryptoMiniSat/CryptoMiniSatSolver.h"
 #include "Gurobi/GurobiSolver.h"
 #include "LocalSolverSat/LocalSolverSat.h"
+#include "SolverPortfolio/SolverPortfolio.h"
 
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
 #include "Partitioning/Algorithm/DisconnectedPartitioner.h"
 #include "Partitioning/Algorithm/FastPartitioner.h"
+#include "Partitioning/Algorithm/OnePointPartitioner.h"
 
 int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLimitMs timeLimit)
 {
@@ -32,14 +34,17 @@ int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLim
 
     auto problem = ParseCNF(infile);
 
-    std::shared_ptr<SATSolver> solver = std::make_shared<GurobiSolver>();
-    //auto s = std::make_shared<CryptoMiniSatSolver>();
-    //auto s = std::make_shared<LocalSolverSat>();
+    std::shared_ptr<SATSolver> solver;
+    // solver = std::make_shared<GurobiSolver>();
+    // solver = std::make_shared<CryptoMiniSatSolver>();
+    // solver = std::make_shared<LocalSolverSat>();
+    solver = std::make_shared<SolverPortfolio>();
 
 #if true // use partitioning
-    auto part = std::make_shared<FastPartitioner>();
+    //auto part = std::make_shared<FastPartitioner>();
     //auto part = std::make_shared<DisconnectedPartitioner>();
     //auto part = std::make_shared<GreedyPartitioner>();
+    auto part = std::make_shared<OnePointPartitioner>();
     part->SetPartitionSolver(solver);
     solver = part;
 #endif
