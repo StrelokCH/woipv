@@ -2,6 +2,7 @@
 #include "GreedyPartitioner.h"
 
 #include "TimeLimitError.h"
+#include "Partitioning/Utility/ClauseUtility.h"
 
 #include <set>
 #include <algorithm>
@@ -55,35 +56,6 @@ std::vector<std::set<Variable>> GreedyPartitioner::CreatePartitions(const Proble
     AssignClauses(partitions, orderedClauses, 0);
 
     return partitions;
-}
-
-size_t GetConnectivity(const std::set<Variable>& l, const std::set<Variable>& r)
-{
-    struct Counter {
-        struct value_type {
-            value_type(const Variable&)
-            {
-            }
-        };
-        void push_back(const value_type&)
-        {
-            ++count;
-        }
-        size_t count = 0;
-    };
-
-    Counter c;
-    std::set_intersection(l.begin(), l.end(), r.begin(), r.end(), std::back_inserter(c));
-    return c.count;
-}
-
-size_t GetConnectivity(const std::vector<std::set<Variable>>& l, const std::set<Variable>& r)
-{
-    decltype(GetConnectivity(l, r)) max = 0;
-    for (auto& v : l) {
-        max = std::max(max, GetConnectivity(v, r));
-    }
-    return max;
 }
 
 std::vector<std::set<Variable>> GreedyPartitioner::FindStartPartitions(std::set<std::set<Variable>>& clauses, decltype(NumberOfPartitions) numberOfPartitions)

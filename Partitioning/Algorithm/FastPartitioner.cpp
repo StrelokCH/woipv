@@ -6,23 +6,7 @@
 #include <iterator>
 #include <iostream>
 
-template <class I1, class I2>
-bool HaveCommonElement(I1 e1, I2 e2)
-{
-    auto first1 = e1.begin();
-    auto last1 = e1.end();
-    auto first2 = e2.begin();
-    auto last2 = e2.end();
-    while (first1 != last1 && first2 != last2) {
-        if (*first1 < *first2)
-            ++first1;
-        else if (*first2 < *first1)
-            ++first2;
-        else
-            return true;
-    }
-    return false;
-}
+#include "Partitioning/Utility/ClauseUtility.h"
 
 Solution FastPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs timeLimit)
 {
@@ -52,7 +36,7 @@ Solution FastPartitioner::SolveExt(const Problem& problem, OptionalTimeLimitMs t
             std::transform(clauses[i].begin(), clauses[i].end(), std::inserter(varClause, varClause.begin()), [](auto lit) {
                 return ToVariable(lit);
             });
-            if (HaveCommonElement(partitions[partition], varClause)) {
+            if (IsConnected(partitions[partition], varClause)) {
                 foundOne = true;
                 subproblems[partition].push_back(clauses[i]);
                 partitions[partition].insert(varClause.begin(), varClause.end());
