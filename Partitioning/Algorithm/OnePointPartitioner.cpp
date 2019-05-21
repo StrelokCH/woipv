@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <iterator>
 
+// Todo
+#include <fstream>
+
 template <class T>
 void SortBySizeDesc(std::vector<T>& vec)
 {
@@ -36,7 +39,17 @@ Solution OnePointPartitioner::SolveExt(const Problem& problem, OptionalTimeLimit
     // merge partitions if they have at least two connections
     MergePartitionsC2(partitions);
 
-    return {SolvingResult::Satisfiable, {}};
+
+    // Todo
+    {
+        auto cutSet = FindCutSet(partitions);
+        auto connections = ExtractConnections(partitions);
+        std::ofstream outfile("instance/debug.csv", std::fstream::app);
+        if (outfile) {
+            outfile << problem.GetClauses().size() << ";" << partitions.size() << ";" << cutSet.size() << std::endl;
+        }
+        return {(partitions.size() > 1 && cutSet.size() <= partitions.size()) ? SolvingResult::Satisfiable : SolvingResult::Unsatisfiable, {}};
+    }
 
     // Todo
     /* Solution result = SolveSubproblems(problem, partitions);
