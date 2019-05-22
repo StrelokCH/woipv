@@ -113,12 +113,12 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
         //solvers.push_back(std::make_shared<GurobiSolver>());
         //solvers.push_back(std::make_shared<LocalSolverSat>());
         //solvers.push_back(std::make_shared<SolverPortfolio>());
-        {
+        /*{
             auto s = std::make_shared<FastPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
         }
-        /*{
+        {
             auto s = std::make_shared<FastPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<GurobiSolver>());
