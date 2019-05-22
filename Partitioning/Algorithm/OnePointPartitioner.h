@@ -52,9 +52,10 @@ private:
     virtual void MergePartitions(std::vector<Partition>& partitions, size_t& into, size_t& from);
     virtual void DeletePartition(std::vector<Partition>& partitions, size_t& position);
     virtual void MergePartitionsC2(std::vector<Partition>& partitions);
-    virtual std::vector<Clause> MergeClauses(std::vector<Partition>& partitions);
+    virtual std::vector<Clause> MergeClauses1(std::vector<Partition>& partitions);
+    virtual void MergeConnections(std::vector<Partition>& partitions);
     virtual Solution SolveSubproblems(const Problem& problem, std::vector<Partition>& partitions);
-    virtual std::vector<Clause> ExtractConnections(std::vector<Partition>& partitions);
+    virtual std::vector<Partition> ExtractConnections(std::vector<Partition>& partitions);
     virtual std::set<Literal> FindCutSet(const std::vector<Partition>& partitions);
     virtual std::optional<Assignment> FindMerge(const std::vector<std::vector<Assignment>>& solutionsSubProblems, const std::set<Variable>& cutSet);
     virtual bool FindMergeRecursive(const std::vector<std::vector<Assignment>>& solutionsSubProblems, const std::vector<Variable>& cutSet, size_t depth, Assignment& assignment);

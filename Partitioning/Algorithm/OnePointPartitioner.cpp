@@ -34,11 +34,16 @@ Solution OnePointPartitioner::SolveExt(const Problem& problem, OptionalTimeLimit
     MergePartitionsC2(partitions);
 
     // merge clauses, if they only have one single connection with only one other partition
-    auto looseClauses = MergeClauses(partitions);
+    auto looseClauses = MergeClauses1(partitions);
 
     // merge partitions if they have at least two connections
     MergePartitionsC2(partitions);
 
+    // add connection clauses to the smallest partition
+    MergeConnections(partitions);
+
+    // merge partitions if they have at least two connections
+    MergePartitionsC2(partitions);
 
     // Todo
     {
@@ -102,20 +107,19 @@ void OnePointPartitioner::MergePartitionsC2(std::vector<Partition>& partitions)
 {
     const size_t MinMergeConnectivity = 2;
     for (size_t i = 0; i < partitions.size(); i++) {
-        const auto& partition = partitions[i].variables;
         for (size_t j = 0; j < partitions.size(); j++) {
             if (i == j) {
                 continue;
             }
             CheckTimeLimit();
-            if (GetConnectivity(partition, partitions[j].variables) >= MinMergeConnectivity) {
+            if (GetConnectivity(partitions[i].variables, partitions[j].variables) >= MinMergeConnectivity) {
                 MergePartitions(partitions, i, j);
             }
         }
     }
 }
 
-std::vector<Clause> OnePointPartitioner::MergeClauses(std::vector<Partition>& partitions)
+std::vector<Clause> OnePointPartitioner::MergeClauses1(std::vector<Partition>& partitions)
 {
     std::vector<Clause> looseClauses;
     for (size_t i = 0; i < partitions.size(); i++) {
@@ -158,6 +162,30 @@ std::vector<Clause> OnePointPartitioner::MergeClauses(std::vector<Partition>& pa
     }
 
     return looseClauses;
+}
+
+void OnePointPartitioner::MergeConnections(std::vector<Partition>& partitions)
+{
+    std::sort(partitions.begin(), partitions.end(), [](const auto& l, const auto& r) {
+        return l.clauses.size() < r.clauses.size();
+    });
+
+    // assumption: added connections don't dramaticly change the size of partitions
+    for (size_t i = 0; i < partitions.size(); i++) {
+        if (partitions[i].clauses.size() != 1) {
+            // not a connection
+            continue;
+        }
+        for (size_t j = 0; j < partitions.size(); j++) {
+            if (i == j) {
+                continue;
+            }
+            if (GetConnectivity(partitions[i].variables, partitions[j].variables) >= 1) {
+                MergePartitions(partitions, j, i);
+                break;
+            }
+        }
+    }
 }
 
 Solution OnePointPartitioner::SolveSubproblems(const Problem& problem, std::vector<Partition>& partitions)
@@ -205,16 +233,16 @@ Solution OnePointPartitioner::SolveSubproblems(const Problem& problem, std::vect
     return {SolvingResult::Undefined, {}};
 }
 
-std::vector<Clause> OnePointPartitioner::ExtractConnections(std::vector<Partition>& partitions)
+std::vector<Partition> OnePointPartitioner::ExtractConnections(std::vector<Partition>& partitions)
 {
-    std::vector<Clause> connections;
+    std::vector<Partition> connections;
     for (size_t i = 0; i < partitions.size(); i++) {
         if (partitions[i].clauses.size() != 1) {
             // not a connection
             continue;
         }
         CheckTimeLimit();
-        connections.push_back(std::move(partitions[i].clauses[0]));
+        connections.push_back(std::move(partitions[i]));
         DeletePartition(partitions, i);
     }
     return connections;
