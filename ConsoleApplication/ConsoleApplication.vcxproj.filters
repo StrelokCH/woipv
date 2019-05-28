@@ -5,6 +5,7 @@
     <ClCompile Include="ConsoleApplication.cpp" />
     <ClCompile Include="Benchmark.cpp" />
     <ClCompile Include="SingleInstance.cpp" />
+    <ClCompile Include="VariableShift.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

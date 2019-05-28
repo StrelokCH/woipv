@@ -18,9 +18,13 @@ int main(int argc, char *argv[])
     // "instance/input.cnf" "instance/solution.txt"
     //return SingleInstance({argv[1]}, {argv[2]}, {});
     return SingleInstance("instance/input.cnf", "instance/solution.txt", {});
-#else
+#elif tru
     // "C:\Test\woipv\test" "instance/solution.csv"
     //return Benchmark({argv[1]}, {argv[2]}, std::chrono::milliseconds(1000 * 100));
     return Benchmark("C:\\Test\\woipv\\test", "instance/solution.csv", std::chrono::milliseconds(1000 * 100));
+#else
+    // "instance/input.cnf" "instance/output.cnf"
+    //return VariableShift({argv[1]}, {argv[2]}, 0);
+    return VariableShift("instance/input.cnf", "instance/solution.cnf", -1);
 #endif
 }
