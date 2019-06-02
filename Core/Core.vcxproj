@@ -35,6 +35,7 @@
     <ClCompile Include="Types\Problem.cpp" />
     <ClCompile Include="Utility\CNFParser.cpp" />
     <ClCompile Include="Utility\CNFWriter.cpp" />
+    <ClCompile Include="Utility\PartialAssignment.cpp" />
     <ClCompile Include="Utility\TimeLimit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="Utility\CNFConstants.h" />
     <ClInclude Include="Utility\CNFParser.h" />
     <ClInclude Include="Utility\CNFWriter.h" />
+    <ClInclude Include="Utility\PartialAssignment.h" />
     <ClInclude Include="Utility\TimeLimit.h" />
   </ItemGroup>
   <ItemGroup>

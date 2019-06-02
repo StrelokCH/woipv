@@ -91,6 +91,7 @@ protected:
     void RemoveEmptyPartitions(std::vector<std::set<Variable>>& partitions);
     virtual void BeforeSolve(const Problem& problem, OptionalTimeLimitMs timeLimit);
 protected:
-    virtual void CheckTimeLimit();
-    virtual OptionalTimeLimitMs GetRemainingTimeLimit();
+    virtual void CheckTimeLimit() const;
+    virtual OptionalTimeLimitMs GetRemainingTimeLimit() const;
+    virtual OptionalTimeLimitMs GetTimeLimit() const;
 };

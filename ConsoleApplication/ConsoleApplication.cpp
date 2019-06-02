@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //    return EXIT_SUCCESS;
     //}
 
-#if tru
+#if true
     // "instance/input.cnf" "instance/solution.txt"
     //return SingleInstance({argv[1]}, {argv[2]}, {});
     return SingleInstance("instance/input.cnf", "instance/solution.txt", {});

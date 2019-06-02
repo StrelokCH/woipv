@@ -261,14 +261,19 @@ void AbstractPartitioner::BeforeSolve(const Problem& problem, OptionalTimeLimitM
 {
 }
 
-void AbstractPartitioner::CheckTimeLimit()
+void AbstractPartitioner::CheckTimeLimit() const
 {
     if (!HasRemaining(timeLimit, start)) {
         throw TimeLimitError();
     }
 }
 
-OptionalTimeLimitMs AbstractPartitioner::GetRemainingTimeLimit()
+OptionalTimeLimitMs AbstractPartitioner::GetRemainingTimeLimit() const
 {
     return GetRemaining(timeLimit, start);
+}
+
+OptionalTimeLimitMs AbstractPartitioner::GetTimeLimit() const
+{
+    return timeLimit;
 }

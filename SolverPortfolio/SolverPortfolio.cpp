@@ -36,8 +36,8 @@ Solution SolverPortfolio::Solve(const Problem& problem, OptionalTimeLimitMs time
 
 Solution SolverPortfolio::SolveUnlimited(const Problem& problem)
 {
-    // 1 second localsolver (for trivial problems)
-    auto result = gurobi.Solve(problem, std::chrono::milliseconds(1000));
+    // 2 second localsolver (for trivial problems)
+    auto result = gurobi.Solve(problem, std::chrono::milliseconds(2000));
     if (result.first != SolvingResult::Undefined) {
         return result;
     }

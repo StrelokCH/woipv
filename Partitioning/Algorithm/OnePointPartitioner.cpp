@@ -8,6 +8,7 @@
 
 // Todo
 #include <fstream>
+const char* TempFile = "instance/debug.csv";
 
 template <class T>
 void SortBySizeDesc(std::vector<T>& vec)
@@ -45,24 +46,13 @@ Solution OnePointPartitioner::SolveExt(const Problem& problem, OptionalTimeLimit
     // merge partitions if they have at least two connections
     MergePartitionsC2(partitions);
 
-    // Todo
-    {
-        auto cutSet = FindCutSet(partitions);
-        auto connections = ExtractConnections(partitions);
-        std::ofstream outfile("instance/debug.csv", std::fstream::app);
-        if (outfile) {
-            outfile << problem.GetClauses().size() << ";" << partitions.size() << ";" << cutSet.size() << std::endl;
-        }
-        return {(partitions.size() > 1 && cutSet.size() <= partitions.size()) ? SolvingResult::Satisfiable : SolvingResult::Unsatisfiable, {}};
-    }
-
-    // Todo
-    /* Solution result = SolveSubproblems(problem, partitions);
+    // solve subproblems
+    auto result = SolveSubproblems(problem, partitions);
     if (result.first == SolvingResult::Satisfiable) {
         AddSolutionLoose(result.second.value(), looseClauses);
     }
 
-    return result;*/
+    return result;
 }
 
 std::vector<Partition> OnePointPartitioner::ConvertClauses(std::vector<Clause>& clauses)
@@ -191,46 +181,200 @@ void OnePointPartitioner::MergeConnections(std::vector<Partition>& partitions)
 Solution OnePointPartitioner::SolveSubproblems(const Problem& problem, std::vector<Partition>& partitions)
 {
     auto cutSet = FindCutSet(partitions);
-    auto connections = ExtractConnections(partitions);
+
+    if (!IsGoodPartitioning(partitions, cutSet)) {
+#ifdef _DEBUG
+        {
+            std::ofstream outfile(TempFile, std::fstream::app);
+            if (outfile) {
+                outfile << problem.GetClauses().size() << ";" << -1 << std::endl;
+            }
+        }
+#endif
+        return partitionSolver->Solve(problem, GetTimeLimit());
+    }
 
     std::sort(partitions.begin(), partitions.end(), [](const auto& l, const auto& r) {
         return l.clauses.size() < r.clauses.size();
     });
 
-    // create individual cutSets and solve subProblem
-    std::vector<std::vector<Assignment>> solutionsSubProblems;
+    auto centerPartition = partitions.back();
+    partitions.pop_back();
+
+    // create individual cutSets and truth tables
     std::vector<std::set<Variable>> cutSetSubProblems;
-    for (const auto& subProblem : partitions) {
+    std::vector<std::vector<PartialAssignment>> truthTables;
+    for (const auto& partitition : partitions) {
         CheckTimeLimit();
 
         // subCutSet
         std::set<Variable> subCutSet;
         std::set_intersection(
-            subProblem.variables.begin(), subProblem.variables.end(),
+            partitition.variables.begin(), partitition.variables.end(),
             cutSet.begin(), cutSet.end(),
             std::inserter(subCutSet, subCutSet.begin())
         );
         cutSetSubProblems.push_back(subCutSet);
 
-        // solve
-        auto subResult = partitionSolver->Solve(Problem(problem.GetNumberOfVariables(), subProblem.clauses), GetRemainingTimeLimit());
-        if (subResult.first != SolvingResult::Satisfiable) {
-            // already found solution
-            return subResult;
-        }
-        solutionsSubProblems.push_back({subResult.second.value()});
+        // truth tables
+        truthTables.push_back(CreateTruthTable(subCutSet));
     }
+
+    cutSet.clear();
+
+    // give solving again the time of time limit
+    auto solvingStart = std::chrono::steady_clock::now();
+
+    std::vector<std::vector<Solution>> solutions;
+    for (size_t partition = 0; partition < partitions.size(); partition++) {
+        // create subproblems
+        auto subProblems = CreateSubProblems(problem, partitions[partition], cutSetSubProblems[partition], truthTables[partition]);
+
+        // solve subproblems
+        auto subSolutions = partitionSolver->Solve(subProblems, GetRemaining(GetTimeLimit(), solvingStart));
+
+        // check solutions (if there are some)
+        if (std::all_of(subSolutions.begin(), subSolutions.end(), [](const auto& sol) {
+            return sol.first == SolvingResult::Unsatisfiable;
+        })) {
+            // all unsat
+            return {SolvingResult::Unsatisfiable, {}};
+        }
+        if (std::any_of(subSolutions.begin(), subSolutions.end(), [](const auto& sol) {
+            return sol.first == SolvingResult::Undefined;
+        })) {
+            // some are undef
+            return {SolvingResult::Undefined, {}};
+        }
+
+        // all good
+        solutions.push_back(subSolutions);
+    }
+
+    // puzzle sub solutions together
+    auto centerProblem = CreateCenterProblem(problem, centerPartition, cutSetSubProblems, truthTables, solutions);
+
+    cutSetSubProblems.clear();
+
+    // solve final problem
+    auto solution = partitionSolver->Solve(centerProblem, GetRemaining(GetTimeLimit(), solvingStart));
+
+#ifdef _DEBUG
+    {
+        auto solvingEnd = std::chrono::steady_clock::now();
+
+        std::ofstream outfile(TempFile, std::fstream::app);
+        if (outfile) {
+            outfile << problem.GetClauses().size() << ";" << (std::chrono::duration_cast<std::chrono::milliseconds>(solvingEnd - solvingStart).count()) << std::endl;
+        }
+    }
+#endif
 
     // check if there is a solution
-    auto mergedAssignment = FindMerge(solutionsSubProblems, cutSet);
-    if (mergedAssignment.has_value()) {
-        CompleteAssignment(solutionsSubProblems, cutSet, partitions, mergedAssignment.value());
-        return {SolvingResult::Satisfiable, mergedAssignment};
+    if (solution.first != SolvingResult::Satisfiable || !solution.second.has_value()) {
+        return solution;
     }
 
-    // no luck so far
-    // todo: solve all
-    return {SolvingResult::Undefined, {}};
+    // add assignments of subSolutions to final assignment
+    return CompleteAssignment(solution, partitions, truthTables, solutions);
+
+    /*
+    OLD code
+    std::vector<std::vector<Assignment>> solutionsSubProblems;
+    auto mergedAssignment = FindMerge(solutionsSubProblems, cutSet);
+    if (mergedAssignment.has_value()) {
+        CompleteAssignment_Old(solutionsSubProblems, cutSet, partitions, mergedAssignment.value());
+        return {SolvingResult::Satisfiable, mergedAssignment};
+    }
+    */
+}
+
+std::vector<Problem> OnePointPartitioner::CreateSubProblems(const Problem& problem, const Partition& partition, const std::set<Variable>& subCutSet, const std::vector<PartialAssignment>& truthTable)
+{
+    std::vector<Problem> ret;
+    for (const auto& assignment : truthTable) {
+        std::vector<Clause> clauses = partition.clauses;
+        for (const auto& variable : subCutSet) {
+            if (assignment.GetState(variable) == VariableState::True) {
+                clauses.push_back({variable});
+            }
+            if (assignment.GetState(variable) == VariableState::False) {
+                clauses.push_back({Negate(variable)});
+            }
+        }
+        ret.emplace_back(problem.GetNumberOfVariables(), clauses);
+    }
+    return ret;
+}
+
+Clause CreateClause(const std::set<Variable>& cutSet, const PartialAssignment& assignment)
+{
+    decltype(CreateClause(cutSet, assignment)) clause;
+    for (const auto& variable : cutSet) {
+        auto state = assignment.GetState(variable);
+        if (state == VariableState::Undefined) {
+            // should not happen
+            throw std::runtime_error("illegal state");
+        }
+
+        if (state == VariableState::True) {
+            // negate variables which are true
+            clause.emplace_back(Negate(variable));
+        } else {
+            // take variable unchanged if it is false
+            clause.emplace_back(variable);
+        }
+    }
+    return clause;
+}
+
+Problem OnePointPartitioner::CreateCenterProblem(const Problem& problem, const Partition& centerPartition, const std::vector<std::set<Variable>>& subCutSet, const std::vector<std::vector<PartialAssignment>>& truthTable, const std::vector<std::vector<Solution>>& partitionSolutions)
+{
+    if (subCutSet.size() != truthTable.size() || truthTable.size() != partitionSolutions.size()) {
+        throw std::runtime_error("wrong dimension");
+    }
+
+    auto clauses = centerPartition.clauses;
+    for (size_t partition = 0; partition < partitionSolutions.size(); partition++) {
+        for (size_t solution = 0; solution < partitionSolutions[partition].size(); solution++) {
+            const auto& sol = partitionSolutions[partition][solution];
+            if (sol.first == SolvingResult::Unsatisfiable) {
+                clauses.push_back(CreateClause(subCutSet[partition], truthTable[partition][solution]));
+            }
+        }
+    }
+
+    return {problem.GetNumberOfVariables(), clauses};
+}
+
+Solution OnePointPartitioner::CompleteAssignment(const Solution& solution, std::vector<Partition>& partitions, const std::vector<std::vector<PartialAssignment>>& truthTable, const std::vector<std::vector<Solution>>& partitionSolutions)
+{
+    if (partitions.size() != truthTable.size() || truthTable.size() != partitionSolutions.size()) {
+        throw std::runtime_error("wrong dimension");
+    }
+
+    auto assignment = solution.second.value();
+
+    for (size_t partition = 0; partition < partitionSolutions.size(); partition++) {
+        for (size_t solution = 0; solution < partitionSolutions[partition].size(); solution++) {
+            const auto& sol = partitionSolutions[partition][solution];
+            if (sol.first != SolvingResult::Satisfiable || !sol.second.has_value()) {
+                continue;
+            }
+
+            if (truthTable[partition][solution].IsCompatible(assignment)) {
+                // this condition shall only be true for one solution per partition
+
+                const auto& subAssignment = sol.second.value();
+                for (const auto& variable : partitions[partition].variables) {
+                    assignment.SetState(variable, subAssignment.GetState(variable));
+                }
+                break;
+            }
+        }
+    }
+
+    return {solution.first, assignment};
 }
 
 std::vector<Partition> OnePointPartitioner::ExtractConnections(std::vector<Partition>& partitions)
@@ -309,7 +453,7 @@ bool OnePointPartitioner::FindMergeRecursive(const std::vector<std::vector<Assig
     return FindMergeRecursive(solutionsSubProblems, cutSet, depth + 1, assignment);
 }
 
-void OnePointPartitioner::CompleteAssignment(const std::vector<std::vector<Assignment>>& solutionsSubProblems, const std::set<Variable>& cutSet, const std::vector<Partition>& partitions, Assignment& assignment)
+void OnePointPartitioner::CompleteAssignment_Old(const std::vector<std::vector<Assignment>>& solutionsSubProblems, const std::set<Variable>& cutSet, const std::vector<Partition>& partitions, Assignment& assignment)
 {
     for (size_t subProblem = 0; subProblem < partitions.size(); subProblem++) {
         // find matching solution
@@ -344,6 +488,11 @@ void OnePointPartitioner::AddSolutionLoose(Assignment& assignment, std::vector<C
         auto lit = clause[0];
         assignment.SetState(ToVariable(lit), IsPositive(lit) ? VariableState::True : VariableState::False);
     }
+}
+
+bool OnePointPartitioner::IsGoodPartitioning(const std::vector<Partition>& partitions, const std::set<Variable>& cutSet)
+{
+    return partitions.size() > 1 && cutSet.size() <= partitions.size();
 }
 
 std::vector<std::set<Variable>> OnePointPartitioner::CreatePartitions(const Problem& problem)
