@@ -84,7 +84,7 @@ Problem ParseCNF(std::istream& input)
     }
 
     if (numberOfClauses != clausesRead) {
-        std::cout << "Wrong number of clauses. Should be " << numberOfClauses << ", was " << clausesRead << "." << std::endl;
+        std::cout << "Warning: Wrong number of clauses. Should be " << numberOfClauses << ", was " << clausesRead << "." << std::endl;
     }
 
     return Problem(numberOfVariables, std::move(clauses));
