@@ -167,6 +167,7 @@ void OnePointPartitioner::MergeConnections(std::vector<Partition>& partitions)
             continue;
         }
         for (size_t j = 0; j < partitions.size(); j++) {
+            CheckTimeLimit();
             if (i == j) {
                 continue;
             }
