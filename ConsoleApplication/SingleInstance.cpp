@@ -36,11 +36,11 @@ int SingleInstance(std::string instance, std::string outputFile, OptionalTimeLim
 
     std::shared_ptr<SATSolver> solver;
     // solver = std::make_shared<GurobiSolver>();
-    // solver = std::make_shared<CryptoMiniSatSolver>();
+    solver = std::make_shared<CryptoMiniSatSolver>();
     // solver = std::make_shared<LocalSolverSat>();
-    solver = std::make_shared<SolverPortfolio>();
+    //solver = std::make_shared<SolverPortfolio>();
 
-#if true // use partitioning
+#if tru // use partitioning
     //auto part = std::make_shared<FastPartitioner>();
     //auto part = std::make_shared<DisconnectedPartitioner>();
     //auto part = std::make_shared<GreedyPartitioner>();

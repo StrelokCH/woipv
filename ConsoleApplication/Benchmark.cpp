@@ -13,7 +13,9 @@
 #include "Partitioning/Algorithm/FastPartitioner.h"
 #include "Partitioning/Algorithm/GreedyPartitioner.h"
 #include "Partitioning/Algorithm/OnePointPartitioner.h"
+#include "SolverPortfolio/SolverPortfolio.h"
 #include "Core/Utility/CNFParser.h"
+#include "DummySolver.h"
 
 std::string GetHeader()
 {
@@ -112,7 +114,7 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
         //solvers.push_back(std::make_shared<CryptoMiniSatSolver>());
         //solvers.push_back(std::make_shared<GurobiSolver>());
         //solvers.push_back(std::make_shared<LocalSolverSat>());
-        //solvers.push_back(std::make_shared<SolverPortfolio>());
+        solvers.push_back(std::make_shared<SolverPortfolio>());
         /*{
             auto s = std::make_shared<FastPartitioner>();
             solvers.push_back(s);
@@ -137,12 +139,17 @@ int Benchmark(std::string directory, std::string outputFile, OptionalTimeLimitMs
             auto s = std::make_shared<OnePointPartitioner>();
             solvers.push_back(s);
             s->SetPartitionSolver(std::make_shared<CryptoMiniSatSolver>());
-        }*/
+        }
         {
             auto s = std::make_shared<OnePointPartitioner>();
             solvers.push_back(s);
-            s->SetPartitionSolver(std::make_shared<GurobiSolver>());
+            s->SetPartitionSolver(std::make_shared<SolverPortfolio>());
         }
+        {
+            auto s = std::make_shared<OnePointPartitioner>();
+            solvers.push_back(s);
+            s->SetPartitionSolver(std::make_shared<DummySolver>());
+        }*/
     }
 
     // setup output

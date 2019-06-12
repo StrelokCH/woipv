@@ -6,9 +6,11 @@
     <ClCompile Include="Benchmark.cpp" />
     <ClCompile Include="SingleInstance.cpp" />
     <ClCompile Include="VariableShift.cpp" />
+    <ClCompile Include="DummySolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Programs.h" />
+    <ClInclude Include="DummySolver.h" />
   </ItemGroup>
 </Project>
