@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ConsoleApplication.cpp" />
+    <ClCompile Include="Benchmark.cpp" />
+    <ClCompile Include="SingleInstance.cpp" />
+    <ClCompile Include="VariableShift.cpp" />
+    <ClCompile Include="DummySolver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Programs.h" />
+    <ClInclude Include="DummySolver.h" />
+  </ItemGroup>
+</Project>

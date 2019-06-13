@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{ee896a83-3996-4e16-96b4-5d8cfec7c794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Types">
+      <UniqueIdentifier>{314e6976-6c09-4598-8b5a-55059f1cdaca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{883f4d43-da7a-4669-ac62-1e6b58aa1c2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Types\Problem.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Types\Literal.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Types\Assignment.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\CNFParser.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Interfaces\SATSolver.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Interfaces\SATPartitioner.cpp" />
+    <ClCompile Include="Utility\TimeLimit.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\CNFWriter.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Types\Clause.cpp" />
+    <ClCompile Include="Utility\PartialAssignment.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Interfaces\SATSolver.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Literal.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Assignment.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\SolvingResult.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Problem.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Clause.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\SATPartitioner.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="DLLMakro.h" />
+    <ClInclude Include="Utility\CNFParser.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\Solution.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TimeLimit.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CNFWriter.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CNFConstants.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\PartialAssignment.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+</Project>

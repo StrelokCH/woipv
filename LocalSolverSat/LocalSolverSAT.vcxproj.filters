@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="LocalSolverSat.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DLLMakro.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="LocalSolver\lscallback.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lscallbacktype.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lscollection.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lserrorcode.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsexception.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsexpression.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsinconsistency.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsmodel.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsnativecontext.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsnativefunction.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsobjectivedirection.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsoperator.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsparam.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsphase.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lssolution.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lssolutionstatus.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsstate.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsstatistics.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lssymbols.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsvalue.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsversion.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\bbentrypoint.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\localsolverblackbox.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbberrorcode.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbevaluationpoint.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbexception.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbexpression.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbmodel.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbnativecontext.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbnativefunction.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbobjectivedirection.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbboperator.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbparam.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbsolution.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbstate.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbsymbols.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\blackbox\lsbbvalue.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\entrypoint.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\localsolver.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolver\lsarray.h">
+      <Filter>LocalSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalSolverSat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LocalSolver">
+      <UniqueIdentifier>{da838142-17cb-45a3-a6f2-b56737c67379}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="LocalSolver\localsolver.dll.lib">
+      <Filter>LocalSolver</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="LocalSolver\localsolver.dll">
+      <Filter>LocalSolver</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+</Project>
